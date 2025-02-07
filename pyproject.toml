@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "repo-smith"
+version = "0.1.0"
+authors = [{ name = "Jiahao, Woo", email = "woojiahao1234@gmail.com" }]
+description = "YAML-based configuration for initializing Git repositories for unit testing"
+readme = "README.md"
+requires-python = ">=3.13"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development",
+  "Programming Language :: Python :: 3.13",
+]
+license.file = "LICENSE"
+dependencies = ["GitPython"]
+
+[project.urls]
+Homepage = "https://github.com/git-mastery/repo-smith.git"
+Repository = "https://github.com/git-mastery/repo-smith.git"
+Issues = "https://github.com/git-mastery/repo-smith/issues"
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
+pythonpath = "src"
