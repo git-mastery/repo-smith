@@ -1,0 +1,10 @@
+name: Empty commit
+description: Empty commit should be proper empty commit
+initialization:
+  steps:
+    - name: Commit
+      type: commit
+      empty: true
+      message: |
+        Complete something!
+      id: commit

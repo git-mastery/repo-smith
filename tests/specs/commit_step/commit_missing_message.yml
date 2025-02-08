@@ -1,0 +1,7 @@
+name: Commit missing message
+description: Commit missing message should error
+initialization:
+  steps:
+    - name: Commit
+      type: commit
+      empty: true

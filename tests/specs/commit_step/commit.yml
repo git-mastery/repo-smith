@@ -1,0 +1,16 @@
+name: Commit
+description: Regular commit step
+initialization:
+  steps:
+    - name: Adding initial file
+      type: new-file
+      filename: file.txt
+      contents:
+    - name: Add file
+      type: add
+      files:
+        - file.txt
+    - name: Commit
+      type: commit
+      message: Adding file.txt
+      id: commit

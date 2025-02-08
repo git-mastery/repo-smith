@@ -178,7 +178,7 @@ class RepoInitializer:
                 raise ValueError('Missing "filename" field in file step.')
 
             filename = step["filename"]
-            contents = step.get("contents", "")
+            contents = step.get("contents", "") or ""
 
             match step_type:
                 case StepType.NEW_FILE:
