@@ -2,7 +2,7 @@
 
 ## Inspiration
 
-`repo-tester` is a unit testing library built on top of `GitPython` and
+`repo-smith` is a unit testing library built on top of `GitPython` and
 inspired by the
 [`GitPython` unit testing](https://github.com/gitpython-developers/GitPython/blob/main/test/test_diff.py)
 where unit tests for Git repositories are performed by directly creating
@@ -13,10 +13,10 @@ any unit testing can even be conducted) is too tedious and given that we want
 to similarly unit test solution files for Git Mastery, we want a much better
 overall developer experience in initializing and creating test Git repositories.
 
-`repo-tester` declares a lightweight YAML-based configuration language,
+`repo-smith` declares a lightweight YAML-based configuration language,
 allowing developers to declare Git repositories to be created using an
 intuitive syntax (detailed below) and will serve as the basis for initializing
-larger and more complex repositories. Using `repo-tester`, you can streamline
+larger and more complex repositories. Using `repo-smith`, you can streamline
 your Git repository unit testing, focusing on validating the behavior of your
 solutions.
 
@@ -122,11 +122,21 @@ exception during initialization.
 
 Type: `string`
 
+#### `initialization.steps[*].tag-message`
+
+Tag message to be used on the current commit. Only read if
+`initialization.steps[*].type` is `tag`. Optional.
+
+Type: `string`
+
 #### `initialization.steps[*].filename`
 
 Target file name. Only read if
 `initialization.steps[*].type` is `new-file`, `edit-file`, `delete-file` or
 `append-file`.
+
+Specify any new folders in the `filename` and `repo-smith` will initialize them
+accordingly.
 
 Type: `string`
 
@@ -206,7 +216,8 @@ def test_hook() -> None:
   spec_path = "hooks.yml"
   repo_initializer = initialize_repo(spec_path)
   repo_initializer.add_pre_hook("first-commit", first_commit_pre_hook)
-  repo = repo_initializer.initialize()
+  with repo_initializer.initialize() as repo:
+    print(repo.repo)
 ```
 
 ## FAQ
@@ -252,7 +263,8 @@ def test_hook() -> None:
   spec_path = "dynamic-tag.yml"
   repo_initializer = initialize_repo(spec_path)
   repo_initializer.add_post_hook("initial-commit", first_commit_pre_hook)
-  repo = repo_initializer.initialize()
+  with repo_initializer.initialize() as repo:
+    print(repo.repo)
 ```
 
 In this design, we are able to very quickly attach tags to various commits
