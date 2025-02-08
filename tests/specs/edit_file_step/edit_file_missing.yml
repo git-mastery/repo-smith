@@ -1,0 +1,10 @@
+name: Edit file with missing file
+description: Editing a file with missing file should error during initialization
+initialization:
+  steps:
+    - name: Edit filea
+      type: edit-file
+      filename: filea.txt
+      contents: |
+        Edited text
+      id: edit

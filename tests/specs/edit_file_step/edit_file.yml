@@ -1,0 +1,23 @@
+name: Edit file
+description: Editing a file
+initialization:
+  steps:
+    - name: Add filea
+      type: new-file
+      filename: filea.txt
+      contents: |
+        Original text
+      id: add
+    - name: Edit filea
+      type: edit-file
+      filename: filea.txt
+      contents: |
+        Edited text
+      id: edit
+    - name: Add both files
+      type: add
+      files:
+        - filea.txt
+    - name: Commit
+      type: commit
+      message: Add regular file
