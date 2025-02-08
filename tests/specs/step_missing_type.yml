@@ -1,0 +1,7 @@
+name: Step missing type
+description: Step missing type should error
+initialization:
+  steps:
+    - name: Test
+      empty: true
+      message: Empty commit
