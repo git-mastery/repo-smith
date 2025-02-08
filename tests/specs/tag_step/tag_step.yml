@@ -1,0 +1,20 @@
+name: Tag step
+description: Regular tag step
+initialization:
+  steps:
+    - name: Empty commit 1
+      type: commit
+      empty: true
+      message: Empty commit 1
+    - name: Tag 1
+      type: tag
+      tag-name: without-description
+    - name: Empty commit 2
+      type: commit
+      empty: true
+      message: Empty commit 2
+    - name: Tag 2
+      type: tag
+      tag-name: with-description
+      tag-message: |
+        Hello world!

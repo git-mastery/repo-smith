@@ -151,7 +151,7 @@ class RepoInitializer:
             if "tag-name" not in step:
                 raise ValueError('Missing "tag-name" field in tag step.')
 
-            if step["tag-name"].strip() == "":
+            if step["tag-name"] is None or step["tag-name"].strip() == "":
                 raise ValueError('Empty "tag-name" field in tag step.')
 
             tag_name_regex = "^[0-9a-zA-Z-_.]*$"

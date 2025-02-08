@@ -1,0 +1,10 @@
+name: Tag step missing tag name field
+description: Tag step missing tag name field will raise error
+initialization:
+  steps:
+    - name: Empty commit
+      type: commit
+      empty: true
+      message: Empty commit
+    - name: Tag
+      type: tag

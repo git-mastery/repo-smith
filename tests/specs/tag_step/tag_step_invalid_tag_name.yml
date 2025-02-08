@@ -1,0 +1,11 @@
+name: Tag step invalid tag name field
+description: Tag step invalid tag name field will raise error
+initialization:
+  steps:
+    - name: Empty commit
+      type: commit
+      empty: true
+      message: Empty commit
+    - name: Tag
+      type: tag
+      tag-name: inv@l!d
