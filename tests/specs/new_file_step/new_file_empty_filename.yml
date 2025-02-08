@@ -1,0 +1,9 @@
+name: New file empty filename
+description: New file empty filename should error
+initialization:
+  steps:
+    - name: New file
+      type: new-file
+      filename:
+      contents: |
+        Hello world

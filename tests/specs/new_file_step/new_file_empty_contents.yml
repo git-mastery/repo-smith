@@ -1,0 +1,11 @@
+name: New file empty contents
+description: New file with empty contents will create an empty file
+initialization:
+  steps:
+    - name: Add file
+      type: new-file
+      filename: filea.txt
+    - name: Add file
+      type: new-file
+      filename: fileb.txt
+      contents:

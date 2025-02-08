@@ -177,6 +177,9 @@ class RepoInitializer:
             if "filename" not in step:
                 raise ValueError('Missing "filename" field in file step.')
 
+            if step["filename"] is None or step["filename"].strip() == "":
+                raise ValueError('Empty "filename" field in file step.')
+
             filename = step["filename"]
             contents = step.get("contents", "") or ""
 

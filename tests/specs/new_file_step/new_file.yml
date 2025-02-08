@@ -1,0 +1,26 @@
+name: New file
+description: Creating a new file
+initialization:
+  steps:
+    - name: New file
+      type: new-file
+      filename: filea.txt
+      contents: |
+        Hello world!
+
+        This is a file
+      id: filea
+    - name: New file
+      type: new-file
+      filename: nested/a/b/c/filed.txt
+      contents: |
+        This is a nested file
+      id: nested_file
+    - name: Add both files
+      type: add
+      files:
+        - filea.txt
+        - nested/a/b/c/filed.txt
+    - name: Commit
+      type: commit
+      message: Add regular file and nested file
