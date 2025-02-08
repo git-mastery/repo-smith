@@ -137,7 +137,7 @@ class RepoInitializer:
             if "files" not in step:
                 raise ValueError('Missing "files" field in add step.')
 
-            if step["files"] == []:
+            if step["files"] is None or step["files"] == []:
                 raise ValueError('Empty "files" list in add step.')
 
             return repo_smith.steps.add_step.AddStep(

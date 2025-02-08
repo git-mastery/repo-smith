@@ -1,0 +1,14 @@
+name: Add step
+description: Standard add step
+initialization:
+  steps:
+    - name: Create file
+      type: new-file
+      filename: file.txt
+      contents: |
+        Hello world
+    - name: Adding file
+      type: add
+      files:
+        - file.txt
+      id: add
