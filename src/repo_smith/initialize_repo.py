@@ -154,10 +154,10 @@ class RepoInitializer:
             if step["tag-name"].strip() == "":
                 raise ValueError('Empty "tag-name" field in tag step.')
 
-            tag_name_regex = "^[0-9a-zA-Z-_]*$"
+            tag_name_regex = "^[0-9a-zA-Z-_.]*$"
             if re.search(tag_name_regex, step["tag-name"]) is None:
                 raise ValueError(
-                    'Field "tag-name" can only contain alphanumeric characters, _, -.'
+                    'Field "tag-name" can only contain alphanumeric characters, _, -, .'
                 )
 
             return repo_smith.steps.tag_step.TagStep(
