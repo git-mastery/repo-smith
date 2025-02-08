@@ -1,0 +1,7 @@
+name: Step no name
+description: Step missing name should error
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: No name, no commit

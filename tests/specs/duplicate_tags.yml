@@ -1,0 +1,18 @@
+name: Duplicate tags
+description: Duplicate tags should be caught during initialization of the repository
+initialization:
+  steps:
+    - name: First commit
+      type: commit
+      empty: true
+      message: First commit
+    - name: First tag
+      type: tag
+      tag-name: tag
+    - name: Second commit
+      type: commit
+      empty: true
+      message: Second commit
+    - name: Second tag
+      type: tag
+      tag-name: tag

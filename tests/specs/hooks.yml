@@ -1,0 +1,26 @@
+name: Testing hooks
+description: |
+  Lifecycle hooks on each step give visibility into the initialization process
+initialization:
+  steps:
+    - name: First commit
+      type: commit
+      message: First commit
+      empty: true
+      id: first-commit
+    - name: Creating a new file
+      type: new-file
+      filename: test.txt
+      contents: |
+        Hello world!
+    - name: Adding test.txt
+      type: add
+      files:
+        - test.txt
+      id: add-test-txt
+    - name: Second commit
+      type: commit
+      message: Add test.txt
+    - name: Start tag
+      type: tag
+      tag-name: start-tag

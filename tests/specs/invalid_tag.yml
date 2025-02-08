@@ -1,0 +1,11 @@
+name: Invalid tag
+description: Invalid tag should error on initialization
+initialization:
+  steps:
+    - name: Commit
+      type: commit
+      empty: true
+      message: Commit
+    - name: Tag
+      type: tag
+      tag-name: inv@lid

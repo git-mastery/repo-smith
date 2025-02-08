@@ -1,0 +1,12 @@
+name: Basic spec
+description: Starting basic spec
+initialization:
+  steps:
+    - name: Initial commit
+      type: commit
+      empty: true
+      message: Initial commit
+      id: initial-commit
+    - name: Start tag
+      type: tag
+      tag-name: start-tag

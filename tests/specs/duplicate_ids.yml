@@ -1,0 +1,14 @@
+name: Duplicate IDs
+description: Duplicate IDs should be caught during initialization of the repository
+initialization:
+  steps:
+    - name: First commit
+      type: commit
+      empty: true
+      message: First commit
+      id: commit
+    - name: Second commit
+      type: commit
+      empty: true
+      message: Second commit
+      id: commit
