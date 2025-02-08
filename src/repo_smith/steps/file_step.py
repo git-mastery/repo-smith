@@ -18,8 +18,9 @@ class NewFileStep(FileStep):
     def execute(self, repo: Repo) -> None:
         rw_dir = repo.working_dir
         filepath = os.path.join(rw_dir, self.filename)
-        pathlib.Path(filepath).mkdir(parents=True, exist_ok=True)
-        with open(filepath, "w") as fs:
+        filepath_dir_only = os.path.dirname(filepath)
+        pathlib.Path(filepath_dir_only).mkdir(parents=True, exist_ok=True)
+        with open(filepath, "w+") as fs:
             fs.write(self.contents)
 
 
