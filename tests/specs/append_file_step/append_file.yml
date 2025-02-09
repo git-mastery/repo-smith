@@ -1,0 +1,15 @@
+name: Append file
+description: Regular append file
+initialization:
+  steps:
+    - name: Create file
+      type: new-file
+      filename: file.txt
+      contents: |
+        Hello world
+    - name: Append file
+      type: append-file
+      filename: file.txt
+      contents: |
+        This is a new line!
+      id: append-file

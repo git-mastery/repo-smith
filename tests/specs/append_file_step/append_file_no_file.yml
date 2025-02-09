@@ -1,0 +1,7 @@
+name: Append file no file
+description: Append file with no file raises error
+initialization:
+  steps:
+    - name: Append file
+      type: append-file
+      filename: file.txt

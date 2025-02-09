@@ -1,0 +1,11 @@
+name: Append file missing filename
+description: Append file with missing filename raises error
+initialization:
+  steps:
+    - name: Create file
+      type: new-file
+      filename: file.txt
+      contents: |
+        Hello world
+    - name: Append file
+      type: append-file
