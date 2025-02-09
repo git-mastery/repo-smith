@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "repo-smith"
-version = "0.2.0"
+version = "0.2.1"
 authors = [{ name = "Jiahao, Woo", email = "woojiahao1234@gmail.com" }]
 description = "YAML-based configuration for initializing Git repositories for unit testing"
 readme = "README.md"
@@ -16,7 +16,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
 ]
 license.file = "LICENSE"
-dependencies = ["GitPython"]
+dependencies = ["GitPython", "PyYAML", "types-PyYAML"]
 
 [project.urls]
 Homepage = "https://github.com/git-mastery/repo-smith.git"
