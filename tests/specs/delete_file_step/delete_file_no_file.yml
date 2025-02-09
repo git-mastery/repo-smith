@@ -1,0 +1,7 @@
+name: Delete file with no file
+description: Delete file with no file should error
+initialization:
+  steps:
+    - name: Delete file
+      type: delete-file
+      filename: file.txt

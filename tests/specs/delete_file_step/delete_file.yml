@@ -1,0 +1,13 @@
+name: Delete file
+description: Basic delete file
+initialization:
+  steps:
+    - name: Create file
+      type: new-file
+      filename: file.txt
+      contents: |
+        Hello world!
+    - name: Delete file
+      type: delete-file
+      filename: file.txt
+      id: delete-file

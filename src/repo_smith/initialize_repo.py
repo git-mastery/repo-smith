@@ -231,6 +231,8 @@ def initialize_repo(spec_path: str) -> RepoInitializer:
     with open(spec_path, "rb") as spec_file:
         try:
             spec_data = yaml.safe_load(spec_file)
+            if spec_data is None:
+                raise ValueError("Incomplete spec file.")
             return RepoInitializer(spec_data)
         except Exception as e:
             raise e
