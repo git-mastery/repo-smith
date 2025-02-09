@@ -24,7 +24,7 @@ solutions.
 
 ### `name`
 
-Name of the Git repository unit test. Not optional.
+Name of the Git repository unit test. Optional.
 
 Type: `string`
 
@@ -44,7 +44,7 @@ Includes the instructions and components to initialize the repository.
 
 #### `initialization.steps[*].name`
 
-Name of the initialization step. Not optional.
+Name of the initialization step. Optional.
 
 Type: `string`
 
