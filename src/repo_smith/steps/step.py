@@ -9,7 +9,7 @@ from repo_smith.steps.step_type import StepType
 
 @dataclass
 class Step(ABC):
-    name: str
+    name: Optional[str]
     step_type: StepType
     description: Optional[str]
     id: Optional[str]

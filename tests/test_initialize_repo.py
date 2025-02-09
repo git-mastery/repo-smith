@@ -4,11 +4,6 @@ from git import Repo
 from src.repo_smith.initialize_repo import initialize_repo
 
 
-def test_initialize_repo_no_name() -> None:
-    with pytest.raises(Exception):
-        initialize_repo("tests/specs/no_name.yml")
-
-
 def test_initialize_repo_basic_spec() -> None:
     initialize_repo("tests/specs/basic_spec.yml")
 

@@ -100,23 +100,21 @@ class RepoInitializer:
         return ids
 
     def __parse_spec(self, spec: Any) -> Spec:
-        if "name" not in spec:
-            raise ValueError('Missing "name" field in spec.')
-
         steps = []
         for step in spec.get("initialization", {}).get("steps", []):
             steps.append(self.__parse_step(step))
 
-        return Spec(name=spec["name"], description=spec.get("description"), steps=steps)
+        return Spec(
+            name=spec.get("name", "") or "",
+            description=spec.get("description", "") or "",
+            steps=steps,
+        )
 
     def __parse_step(self, step: Any) -> Step:
-        if "name" not in step:
-            raise ValueError('Missing "name" field in step.')
-
         if "type" not in step:
             raise ValueError('Missing "type" field in step.')
 
-        name = step["name"]
+        name = step.get("name")
         description = step.get("description")
         step_type = StepType.from_value(step["type"])
         id = step.get("id")
