@@ -2,3 +2,5 @@ GitPython
 pytest
 PyYAML
 types-PyYAML
+build
+twine
