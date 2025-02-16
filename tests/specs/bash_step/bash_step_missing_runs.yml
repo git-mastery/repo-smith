@@ -1,0 +1,5 @@
+name: Bash step missing runs field
+description: Bash step with missing runs field raises error
+initialization:
+  steps:
+    - type: bash

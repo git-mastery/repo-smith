@@ -1,0 +1,7 @@
+name: Bash step with invalid runs
+description: Bash step with invalid runs field raises error
+initialization:
+  steps:
+    - type: bash
+      runs: |
+        cwd

@@ -1,0 +1,8 @@
+name: Bash step
+description: Regular bash step
+initialization:
+  steps:
+    - type: bash
+      runs: |
+        touch file{1..5}.txt
+        echo 'Hello world' >> file4.txt
