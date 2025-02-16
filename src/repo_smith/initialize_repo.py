@@ -9,6 +9,7 @@ import yaml
 from git import Repo
 
 import repo_smith.steps.add_step
+import repo_smith.steps.bash_step
 import repo_smith.steps.commit_step
 import repo_smith.steps.file_step
 import repo_smith.steps.tag_step
@@ -165,6 +166,20 @@ class RepoInitializer:
                 id=id,
                 tag_name=step["tag-name"],
                 tag_message=step.get("tag-message"),
+            )
+        elif step_type == StepType.BASH:
+            if "runs" not in step:
+                raise ValueError('Missing "runs" field in bash step.')
+
+            if step["runs"] is None or step["runs"].strip() == "":
+                raise ValueError('Empty "runs" field in file step.')
+
+            return repo_smith.steps.bash_step.BashStep(
+                name=name,
+                description=description,
+                step_type=step_type,
+                id=id,
+                body=step["runs"],
             )
         elif step_type in {
             StepType.NEW_FILE,
