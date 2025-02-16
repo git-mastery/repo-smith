@@ -83,6 +83,7 @@ Accepted values include:
 - `edit-file`
 - `delete-file`
 - `append-file`
+- `bash`
 
 More action types will be supported in the future:
 
@@ -90,7 +91,6 @@ More action types will be supported in the future:
 - `branch`
 - `checkout`
 - `reset`
-- `bash`
 
 #### `initialization.steps[*].empty`
 
@@ -145,6 +145,12 @@ Type: `string`
 File content for file `initialization.steps[*].filename`. Only read if
 `initialization.steps[*].type` is `new-file`, `edit-file`, `delete-file` or
 `append-file`.
+
+Type: `string`
+
+#### `initialization.steps[*].runs`
+
+Bash commands to execute. Only read if `initialization.steps[*].type` is `bash`.
 
 Type: `string`
 
