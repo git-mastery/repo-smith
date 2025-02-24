@@ -1,0 +1,12 @@
+name: Branch step with empty branch name
+description: Branch step with empty branch name raises error
+initialization:
+  steps:
+    - type: commit
+      message: test commit
+      empty: true
+    - type: branch
+      branch-name:
+    - type: commit
+      message: test commit
+      empty: true

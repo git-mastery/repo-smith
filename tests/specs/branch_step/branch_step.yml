@@ -1,0 +1,12 @@
+name: Branch step
+description: Regular branch step
+initialization:
+  steps:
+    - type: commit
+      message: test commit
+      empty: true
+    - type: branch
+      branch-name: test
+    - type: commit
+      message: test commit
+      empty: true

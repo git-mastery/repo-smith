@@ -13,6 +13,7 @@ import repo_smith.steps.bash_step
 import repo_smith.steps.commit_step
 import repo_smith.steps.file_step
 import repo_smith.steps.tag_step
+import repo_smith.steps.branch_step
 from repo_smith.spec import Spec
 from repo_smith.steps.step import Step
 from repo_smith.steps.step_type import StepType
@@ -180,6 +181,20 @@ class RepoInitializer:
                 step_type=step_type,
                 id=id,
                 body=step["runs"],
+            )
+        elif step_type == StepType.BRANCH:
+            if "branch-name" not in step:
+                raise ValueError('Missing "branch-name" field in branch step.')
+
+            if step["branch-name"] is None or step["branch-name"].strip() == "":
+                raise ValueError('Empty "branch-name" field in file step.')
+
+            return repo_smith.steps.branch_step.BranchStep(
+                name=name,
+                description=description,
+                step_type=step_type,
+                id=id,
+                branch_name=step["branch-name"],
             )
         elif step_type in {
             StepType.NEW_FILE,

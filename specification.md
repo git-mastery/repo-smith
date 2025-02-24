@@ -84,12 +84,12 @@ Accepted values include:
 - `delete-file`
 - `append-file`
 - `bash`
+- `branch`
+- `checkout`
 
 More action types will be supported in the future:
 
 - `revert`
-- `branch`
-- `checkout`
 - `reset`
 
 #### `initialization.steps[*].empty`
@@ -151,6 +151,15 @@ Type: `string`
 #### `initialization.steps[*].runs`
 
 Bash commands to execute. Only read if `initialization.steps[*].type` is `bash`.
+
+Type: `string`
+
+#### `initialization.steps[*].branch-name`
+
+Branch name. Only read if `initialization.steps[*].type` is `branch` or
+`checkout`.
+
+Users are expected to manage their own branches themselves.
 
 Type: `string`
 
