@@ -6,14 +6,14 @@ import pytest
 from src.repo_smith.initialize_repo import initialize_repo
 
 
-def test_branch_step_missing_files():
+def test_branch_step_missing_branch_name():
     with pytest.raises(Exception):
-        initialize_repo("tests/specs/branch_step/branch_step_missing_files.yml")
+        initialize_repo("tests/specs/branch_step/branch_step_missing_branch_name.yml")
 
 
-def test_branch_step_empty_files():
+def test_branch_step_empty_branch_name():
     with pytest.raises(Exception):
-        initialize_repo("tests/specs/branch_step/branch_step_empty_files.yml")
+        initialize_repo("tests/specs/branch_step/branch_step_empty_branch_name.yml")
 
 
 def test_branch_step():
