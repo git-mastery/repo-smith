@@ -1,0 +1,14 @@
+name: Checkout step with empty branch name
+description: Checkout step with empty branch name raises error
+initialization:
+  steps:
+    - type: commit
+      message: test commit
+      empty: true
+    - type: branch
+      branch-name: test
+    - type: commit
+      message: test commit
+      empty: true
+    - type: checkout
+      branch-name:

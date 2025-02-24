@@ -1,0 +1,18 @@
+name: Checkout step
+description: Regular checkout step
+initialization:
+  steps:
+    - type: commit
+      message: test commit
+      empty: true
+    - type: branch
+      branch-name: test
+    - type: commit
+      message: test commit
+      empty: true
+    - type: checkout
+      branch-name: main
+      id: first
+    - type: checkout
+      branch-name: test
+      id: second

@@ -1,0 +1,9 @@
+name: Checkout step with missing branch
+description: Checkout step with missing branch raises error
+initialization:
+  steps:
+    - type: commit
+      message: test commit
+      empty: true
+    - type: checkout
+      branch-name: test

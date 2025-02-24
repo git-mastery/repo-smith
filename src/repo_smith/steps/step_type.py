@@ -11,6 +11,7 @@ class StepType(Enum):
     APPEND_FILE = "append-file"
     BASH = "bash"
     BRANCH = "branch"
+    CHECKOUT = "checkout"
 
     @staticmethod
     def from_value(value: str) -> "StepType":
@@ -33,5 +34,7 @@ class StepType(Enum):
                 return StepType.BASH
             case "branch":
                 return StepType.BRANCH
+            case "checkout":
+                return StepType.CHECKOUT
             case _:
                 raise ValueError(f"Invalid value {value} given. Not supported.")
