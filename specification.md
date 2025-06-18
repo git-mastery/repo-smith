@@ -86,6 +86,7 @@ Accepted values include:
 - `bash`
 - `branch`
 - `checkout`
+- `remote`
 
 More action types will be supported in the future:
 
@@ -160,6 +161,18 @@ Branch name. Only read if `initialization.steps[*].type` is `branch` or
 `checkout`.
 
 Users are expected to manage their own branches themselves.
+
+Type: `string`
+
+#### `initialization.steps[*].remote-name`
+
+Remote name. Only read if `initialization.steps[*].type` is `remote`.
+
+Type: `string`
+
+#### `initialization.steps[*].remote-url`
+
+Remote URL. Only read if `initialization.steps[*].type` is `remote`.
 
 Type: `string`
 

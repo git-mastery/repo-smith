@@ -213,19 +213,19 @@ class RepoInitializer:
                 branch_name=step["branch-name"],
             )
         elif step_type == StepType.REMOTE:
-            if "url" not in step:
-                raise ValueError('Missing "url" field in remote step.')
+            if "remote-url" not in step:
+                raise ValueError('Missing "remote-url" field in remote step.')
 
-            if "name" not in step:
-                raise ValueError('Missing "name" field in remote step.')
+            if "remote-name" not in step:
+                raise ValueError('Missing "remote-name" field in remote step.')
 
             return repo_smith.steps.remote_step.RemoteStep(
                 name=name,
                 description=description,
                 id=id,
                 step_type=step_type,
-                remote_name=step["name"],
-                remote_url=step["url"],
+                remote_name=step["remote-name"],
+                remote_url=step["remote-url"],
             )
         elif step_type in {
             StepType.NEW_FILE,
