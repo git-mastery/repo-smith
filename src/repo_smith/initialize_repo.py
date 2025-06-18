@@ -10,11 +10,12 @@ from git import Repo
 
 import repo_smith.steps.add_step
 import repo_smith.steps.bash_step
-import repo_smith.steps.commit_step
-import repo_smith.steps.file_step
-import repo_smith.steps.tag_step
 import repo_smith.steps.branch_step
 import repo_smith.steps.checkout_step
+import repo_smith.steps.commit_step
+import repo_smith.steps.file_step
+import repo_smith.steps.remote_step
+import repo_smith.steps.tag_step
 from repo_smith.spec import Spec
 from repo_smith.steps.step import Step
 from repo_smith.steps.step_type import StepType
@@ -210,6 +211,21 @@ class RepoInitializer:
                 step_type=step_type,
                 id=id,
                 branch_name=step["branch-name"],
+            )
+        elif step_type == StepType.REMOTE:
+            if "url" not in step:
+                raise ValueError('Missing "url" field in remote step.')
+
+            if "name" not in step:
+                raise ValueError('Missing "name" field in remote step.')
+
+            return repo_smith.steps.remote_step.RemoteStep(
+                name=name,
+                description=description,
+                id=id,
+                step_type=step_type,
+                remote_name=step["name"],
+                remote_url=step["url"],
             )
         elif step_type in {
             StepType.NEW_FILE,
