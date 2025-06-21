@@ -3,7 +3,7 @@ import re
 import shutil
 import tempfile
 from contextlib import contextmanager
-from typing import Any, Callable, Dict, Iterator, Set, TypeAlias
+from typing import Any, Callable, Dict, Iterator, Optional, Set, TypeAlias
 
 import yaml
 from git import Repo
@@ -34,8 +34,8 @@ class RepoInitializer:
         self.__step_ids = self.__get_all_ids(self.__spec)
 
     @contextmanager
-    def initialize(self) -> Iterator[Repo]:
-        tmp_dir = tempfile.mkdtemp()
+    def initialize(self, existing_path: Optional[str] = None) -> Iterator[Repo]:
+        tmp_dir = tempfile.mkdtemp() if existing_path is None else existing_path
         try:
             repo = Repo.init(tmp_dir)
             for step in self.__spec.steps:
