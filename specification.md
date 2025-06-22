@@ -164,6 +164,12 @@ Users are expected to manage their own branches themselves.
 
 Type: `string`
 
+#### `initialization.steps[*].commit-hash`
+
+Commit hash. Only read if `initialization.steps[*].type` is `checkout`.
+
+Type: `string`
+
 #### `initialization.steps[*].remote-name`
 
 Remote name. Only read if `initialization.steps[*].type` is `remote`.

@@ -199,18 +199,18 @@ class RepoInitializer:
                 branch_name=step["branch-name"],
             )
         elif step_type == StepType.CHECKOUT:
-            if "branch-name" not in step:
-                raise ValueError('Missing "branch-name" field in checkout step.')
-
-            if step["branch-name"] is None or step["branch-name"].strip() == "":
-                raise ValueError('Empty "branch-name" field in checkout step.')
+            if step.get("branch-name") is None and step.get("commit-hash") is None:
+                raise ValueError(
+                    'Provide either "branch-name" or "commit-hash" in checkout step.'
+                )
 
             return repo_smith.steps.checkout_step.CheckoutStep(
                 name=name,
                 description=description,
                 step_type=step_type,
                 id=id,
-                branch_name=step["branch-name"],
+                branch_name=step.get("branch-name"),
+                commit_hash=step.get("commit-hash"),
             )
         elif step_type == StepType.REMOTE:
             if "remote-url" not in step:
