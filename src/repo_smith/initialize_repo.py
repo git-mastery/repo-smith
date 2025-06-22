@@ -39,6 +39,7 @@ class RepoInitializer:
         print(tmp_dir)
         print(os.getcwd())
         print(os.listdir())
+        print(os.path.isdir(tmp_dir))
         try:
             repo = Repo.init(tmp_dir)
             for step in self.__spec.steps:
