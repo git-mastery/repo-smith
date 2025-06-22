@@ -36,10 +36,6 @@ class RepoInitializer:
     @contextmanager
     def initialize(self, existing_path: Optional[str] = None) -> Iterator[Repo]:
         tmp_dir = tempfile.mkdtemp() if existing_path is None else existing_path
-        print(tmp_dir)
-        print(os.getcwd())
-        print(os.listdir())
-        print(os.path.isdir(tmp_dir))
         try:
             repo = Repo.init(tmp_dir)
             for step in self.__spec.steps:
