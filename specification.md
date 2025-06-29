@@ -87,6 +87,7 @@ Accepted values include:
 - `branch`
 - `checkout`
 - `remote`
+- `merge`
 
 More action types will be supported in the future:
 
@@ -158,7 +159,7 @@ Type: `string`
 #### `initialization.steps[*].branch-name`
 
 Branch name. Only read if `initialization.steps[*].type` is `branch` or
-`checkout`.
+`checkout` or `merge.
 
 Users are expected to manage their own branches themselves.
 
