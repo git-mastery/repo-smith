@@ -14,6 +14,7 @@ import repo_smith.steps.branch_step
 import repo_smith.steps.checkout_step
 import repo_smith.steps.commit_step
 import repo_smith.steps.file_step
+import repo_smith.steps.merge_step
 import repo_smith.steps.remote_step
 import repo_smith.steps.tag_step
 from repo_smith.spec import Spec
@@ -211,6 +212,17 @@ class RepoInitializer:
                 id=id,
                 branch_name=step.get("branch-name"),
                 commit_hash=step.get("commit-hash"),
+            )
+        elif step_type == StepType.MERGE:
+            if step.get("branch-name") is None:
+                raise ValueError('Provide either "branch-name" in merge step.')
+
+            return repo_smith.steps.merge_step.MergeStep(
+                name=name,
+                description=description,
+                step_type=step_type,
+                id=id,
+                branch_name=step.get("branch-name"),
             )
         elif step_type == StepType.REMOTE:
             if "remote-url" not in step:
