@@ -223,6 +223,7 @@ class RepoInitializer:
                 step_type=step_type,
                 id=id,
                 branch_name=step.get("branch-name"),
+                no_fast_forward=step.get("no-ff", False),
             )
         elif step_type == StepType.REMOTE:
             if "remote-url" not in step:

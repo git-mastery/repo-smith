@@ -159,11 +159,20 @@ Type: `string`
 #### `initialization.steps[*].branch-name`
 
 Branch name. Only read if `initialization.steps[*].type` is `branch` or
-`checkout` or `merge.
+`checkout` or `merge`.
 
 Users are expected to manage their own branches themselves.
 
 Type: `string`
+
+#### `initialization.steps[*].no-ff`
+
+Whether the merge will use fast-forwarding. Only read if 
+`initialization.steps[*].type` is `merge` or `checkout` or `merge`.
+
+Users are expected to manage their own branches themselves.
+
+Type: `bool`
 
 #### `initialization.steps[*].commit-hash`
 
