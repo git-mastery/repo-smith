@@ -17,6 +17,7 @@ import repo_smith.steps.file_step
 import repo_smith.steps.merge_step
 import repo_smith.steps.remote_step
 import repo_smith.steps.tag_step
+from repo_smith.clone_from import CloneFrom
 from repo_smith.spec import Spec
 from repo_smith.steps.step import Step
 from repo_smith.steps.step_type import StepType
@@ -38,7 +39,11 @@ class RepoInitializer:
     def initialize(self, existing_path: Optional[str] = None) -> Iterator[Repo]:
         tmp_dir = tempfile.mkdtemp() if existing_path is None else existing_path
         try:
-            repo = Repo.init(tmp_dir)
+            if self.__spec.clone_from is not None:
+                repo = Repo.clone_from(self.__spec.clone_from.repo_url, tmp_dir)
+            else:
+                repo = Repo.init(tmp_dir)
+
             for step in self.__spec.steps:
                 if step.id in self.__pre_hooks:
                     self.__pre_hooks[step.id](repo)
@@ -106,13 +111,21 @@ class RepoInitializer:
 
     def __parse_spec(self, spec: Any) -> Spec:
         steps = []
+
         for step in spec.get("initialization", {}).get("steps", []):
             steps.append(self.__parse_step(step))
+
+        clone_from = None
+        if spec.get("initialization", {}).get("clone-from", None) is not None:
+            clone_from = CloneFrom(
+                repo_url=spec.get("initialization", {}).get("clone-from", "")
+            )
 
         return Spec(
             name=spec.get("name", "") or "",
             description=spec.get("description", "") or "",
             steps=steps,
+            clone_from=clone_from,
         )
 
     def __parse_step(self, step: Any) -> Step:
