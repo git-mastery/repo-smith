@@ -1,0 +1,7 @@
+initialization:
+  clone-from: https://github.com/git-mastery/git-mastery
+  steps:
+    - type: commit
+      empty: true
+      message: Empty commit
+      id: commit
