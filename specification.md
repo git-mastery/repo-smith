@@ -42,6 +42,24 @@ Includes the instructions and components to initialize the repository.
 > All steps are run sequentially, so ensure that you are declaring the
 > repository from top to bottom
 
+#### `initialization.clone-from`
+
+Specifies a base repository to clone and start the initialization with.
+
+Type: `string`
+
+```yml
+initialization:
+  clone-from: https://github.com/git-mastery/repo-smith
+  steps:
+    - type: commit
+      empty: true
+      message: Empty commit
+```
+
+The above will clone the `git-mastery/repo-smith` repository and add a new
+commit in it.
+
 #### `initialization.steps[*].name`
 
 Name of the initialization step. Optional.
@@ -299,14 +317,14 @@ initialization:
 from repo_smith import initialize_repo
 
 def test_hook() -> None:
-  def tag_commit_pre_hook(r: Repo) -> None:
+  def tag_commit_post_hook(r: Repo) -> None:
     first_commit = list(r.iter_commits("main", max_count=1))[0]
     hexsha = first_commit.hexsha[:7]
     r.create_tag(f"git-mastery-{hexsha}")
 
   spec_path = "dynamic-tag.yml"
   repo_initializer = initialize_repo(spec_path)
-  repo_initializer.add_post_hook("initial-commit", first_commit_pre_hook)
+  repo_initializer.add_post_hook("initial-commit", first_commit_post_hook)
   with repo_initializer.initialize() as repo:
     print(repo.repo)
 ```
