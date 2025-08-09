@@ -7,12 +7,14 @@ from typing import Any, Callable, Dict, Iterator, Optional, Set, TypeAlias
 
 import yaml
 from git import Repo
+from git.objects.submodule.base import FETCH
 
 import repo_smith.steps.add_step
 import repo_smith.steps.bash_step
 import repo_smith.steps.branch_step
 import repo_smith.steps.checkout_step
 import repo_smith.steps.commit_step
+import repo_smith.steps.fetch_step
 import repo_smith.steps.file_step
 import repo_smith.steps.merge_step
 import repo_smith.steps.remote_step
@@ -252,6 +254,17 @@ class RepoInitializer:
                 step_type=step_type,
                 remote_name=step["remote-name"],
                 remote_url=step["remote-url"],
+            )
+        elif step_type == StepType.FETCH:
+            if "remote-name" not in step:
+                raise ValueError('Missing "remote-name" field in fetch step.')
+
+            return repo_smith.steps.fetch_step.FetchStep(
+                name=name,
+                description=description,
+                id=id,
+                step_type=step_type,
+                remote_name=step["remote-name"],
             )
         elif step_type in {
             StepType.NEW_FILE,

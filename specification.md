@@ -106,6 +106,7 @@ Accepted values include:
 - `checkout`
 - `remote`
 - `merge`
+- `fetch`
 
 More action types will be supported in the future:
 
@@ -185,7 +186,7 @@ Type: `string`
 
 #### `initialization.steps[*].no-ff`
 
-Whether the merge will use fast-forwarding. Only read if 
+Whether the merge will use fast-forwarding. Only read if
 `initialization.steps[*].type` is `merge` or `checkout` or `merge`.
 
 Users are expected to manage their own branches themselves.
@@ -200,7 +201,7 @@ Type: `string`
 
 #### `initialization.steps[*].remote-name`
 
-Remote name. Only read if `initialization.steps[*].type` is `remote`.
+Remote name. Only read if `initialization.steps[*].type` is `remote` or `fetch`.
 
 Type: `string`
 
@@ -213,7 +214,7 @@ Type: `string`
 ## Lifecycle hooks
 
 When a step `initializations.steps[*].id` is declared, the step can be
-identified with a unique step `id` (discussed [here](#initializationstepsid))
+identified with a unique step `id` ([discussed here](#initializationstepsid))
 and lifecycle hooks will be automatically installed for the step.
 
 Lifecycle hooks are useful when the unit test wants to provide some guarantees

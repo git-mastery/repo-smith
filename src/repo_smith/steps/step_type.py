@@ -14,6 +14,7 @@ class StepType(Enum):
     CHECKOUT = "checkout"
     REMOTE = "remote"
     MERGE = "merge"
+    FETCH = "fetch"
 
     @staticmethod
     def from_value(value: str) -> "StepType":
@@ -42,5 +43,7 @@ class StepType(Enum):
                 return StepType.REMOTE
             case "merge":
                 return StepType.MERGE
+            case "fetch":
+                return StepType.FETCH
             case _:
                 raise ValueError(f"Invalid value {value} given. Not supported.")
