@@ -107,6 +107,7 @@ Accepted values include:
 - `remote`
 - `merge`
 - `fetch`
+- `branch-rename`
 
 More action types will be supported in the future:
 
@@ -178,9 +179,15 @@ Type: `string`
 #### `initialization.steps[*].branch-name`
 
 Branch name. Only read if `initialization.steps[*].type` is `branch` or
-`checkout` or `merge`.
+`checkout` or `merge` or `branch-rename`.
 
 Users are expected to manage their own branches themselves.
+
+Type: `string`
+
+#### `initialization.steps[*].new-name`
+
+New branch name. Only read if `initialization.steps[*].type` is `branch-rename`.
 
 Type: `string`
 

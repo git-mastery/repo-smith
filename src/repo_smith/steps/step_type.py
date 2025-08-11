@@ -11,6 +11,7 @@ class StepType(Enum):
     APPEND_FILE = "append-file"
     BASH = "bash"
     BRANCH = "branch"
+    BRANCH_RENAME = "branch-rename"
     CHECKOUT = "checkout"
     REMOTE = "remote"
     MERGE = "merge"
@@ -37,6 +38,8 @@ class StepType(Enum):
                 return StepType.BASH
             case "branch":
                 return StepType.BRANCH
+            case "branch-rename":
+                return StepType.BRANCH_RENAME
             case "checkout":
                 return StepType.CHECKOUT
             case "remote":

@@ -7,10 +7,10 @@ from typing import Any, Callable, Dict, Iterator, Optional, Set, TypeAlias
 
 import yaml
 from git import Repo
-from git.objects.submodule.base import FETCH
 
 import repo_smith.steps.add_step
 import repo_smith.steps.bash_step
+import repo_smith.steps.branch_rename_step
 import repo_smith.steps.branch_step
 import repo_smith.steps.checkout_step
 import repo_smith.steps.commit_step
@@ -213,6 +213,27 @@ class RepoInitializer:
                 step_type=step_type,
                 id=id,
                 branch_name=step["branch-name"],
+            )
+        elif step_type == StepType.BRANCH_RENAME:
+            if "branch-name" not in step:
+                raise ValueError('Missing "branch-name" field in branch-rename step.')
+
+            if step["branch-name"] is None or step["branch-name"].strip() == "":
+                raise ValueError('Empty "branch-name" field in branch-rename step.')
+
+            if "new-name" not in step:
+                raise ValueError('Missing "new-name" field in branch-rename step.')
+
+            if step["new-name"] is None or step["new-name"].strip() == "":
+                raise ValueError('Empty "new-name" field in branch-rename step.')
+
+            return repo_smith.steps.branch_rename_step.BranchRenameStep(
+                name=name,
+                description=description,
+                step_type=step_type,
+                id=id,
+                original_branch_name=step["branch-name"],
+                target_branch_name=step["new-name"],
             )
         elif step_type == StepType.CHECKOUT:
             if step.get("branch-name") is None and step.get("commit-hash") is None:
