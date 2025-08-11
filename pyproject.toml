@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "repo-smith"
-version = "0.9.0"
+version = "0.10.0"
 authors = [{ name = "Jiahao, Woo", email = "woojiahao1234@gmail.com" }]
 description = "YAML-based configuration for initializing Git repositories for unit testing"
 readme = "README.md"
