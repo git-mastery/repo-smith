@@ -41,6 +41,7 @@ class RepoInitializer:
     @contextmanager
     def initialize(self, existing_path: Optional[str] = None) -> Iterator[Repo]:
         tmp_dir = tempfile.mkdtemp() if existing_path is None else existing_path
+        repo: Optional[Repo] = None
         try:
             if self.__spec.clone_from is not None:
                 repo = Repo.clone_from(self.__spec.clone_from.repo_url, tmp_dir)
@@ -57,7 +58,9 @@ class RepoInitializer:
                     self.__post_hooks[step.id](repo)
             yield repo
         finally:
-            shutil.rmtree(tmp_dir)
+            if repo is not None:
+                repo.git.clear_cache()
+                shutil.rmtree(tmp_dir)
 
     def add_pre_hook(self, id: str, hook: Hook) -> None:
         if id not in self.__step_ids:
