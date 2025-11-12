@@ -8,8 +8,8 @@ from repo_smith.steps.step import Step
 @dataclass
 class MergeStep(Step):
     branch_name: str
-    no_fast_forward: bool = False
-    squash: bool = False
+    no_fast_forward: bool
+    squash: bool
 
     def execute(self, repo: Repo) -> None:
         merge_args = [self.branch_name, "--no-edit"]
