@@ -8,10 +8,18 @@ from repo_smith.steps.step import Step
 @dataclass
 class MergeStep(Step):
     branch_name: str
-    no_fast_forward: bool
+    no_fast_forward: bool = False
+    squash: bool = False
 
     def execute(self, repo: Repo) -> None:
-        if self.no_fast_forward:
-            repo.git.merge(self.branch_name, "--no-edit", "--no-ff")
-        else:
-            repo.git.merge(self.branch_name, "--no-edit")
+        merge_args = [self.branch_name, "--no-edit"]
+
+        if self.squash:
+            merge_args.append("--squash")
+        elif self.no_fast_forward:
+            merge_args.append("--no-ff")
+
+        repo.git.merge(*merge_args)
+
+        if self.squash:
+            repo.git.commit("-m", f"Squash merge branch '{self.branch_name}'")
