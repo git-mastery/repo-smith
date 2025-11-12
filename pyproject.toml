@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "repo-smith"
-version = "0.11.0"
+dynamic = ["version"]
 authors = [{ name = "Jiahao, Woo", email = "woojiahao1234@gmail.com" }]
 description = "YAML-based configuration for initializing Git repositories for unit testing"
 readme = "README.md"
@@ -26,3 +26,6 @@ Issues = "https://github.com/git-mastery/repo-smith/issues"
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib"]
 pythonpath = "src"
+
+[tool.hatch.version]
+path = "src/repo_smith/version.py"
