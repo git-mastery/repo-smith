@@ -4,16 +4,16 @@ build-backend = "hatchling.build"
 
 [project]
 name = "repo-smith"
-version = "0.10.1"
+version = "0.11.0"
 authors = [{ name = "Jiahao, Woo", email = "woojiahao1234@gmail.com" }]
 description = "YAML-based configuration for initializing Git repositories for unit testing"
 readme = "README.md"
 requires-python = ">=3.13"
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Intended Audience :: Developers",
-  "Topic :: Software Development",
-  "Programming Language :: Python :: 3.13",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development",
+    "Programming Language :: Python :: 3.13",
 ]
 license.file = "LICENSE"
 dependencies = ["GitPython", "PyYAML", "types-PyYAML"]
