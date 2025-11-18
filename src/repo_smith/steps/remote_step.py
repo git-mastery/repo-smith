@@ -27,8 +27,14 @@ class RemoteStep(Step):
         if "remote-url" not in step:
             raise ValueError('Missing "remote-url" field in remote step.')
 
+        if step["remote-url"] is None or step["remote-url"].strip() == "":
+            raise ValueError('Empty "remote-url" field in remote step.')
+
         if "remote-name" not in step:
             raise ValueError('Missing "remote-name" field in remote step.')
+
+        if step["remote-name"] is None or step["remote-name"].strip() == "":
+            raise ValueError('Empty "remote-name" field in remote step.')
 
         return cls(
             name=name,
