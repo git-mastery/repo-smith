@@ -28,7 +28,7 @@ class BashStep(Step):
             raise ValueError('Missing "runs" field in bash step.')
 
         if step["runs"] is None or step["runs"].strip() == "":
-            raise ValueError('Empty "runs" field in file step.')
+            raise ValueError('Empty "runs" field in bash step.')
 
         return cls(
             name=name,
