@@ -7,12 +7,12 @@ from src.repo_smith.initialize_repo import initialize_repo
 
 
 def test_add_step_missing_files():
-    with pytest.raises(Exception):
+    with pytest.raises(ValueError, match='Missing "files" field in add step.'):
         initialize_repo("tests/specs/add_step/add_step_missing_files.yml")
 
 
 def test_add_step_empty_files():
-    with pytest.raises(Exception):
+    with pytest.raises(ValueError, match='Empty "files" list in add step.'):
         initialize_repo("tests/specs/add_step/add_step_empty_files.yml")
 
 
