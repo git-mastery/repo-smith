@@ -25,10 +25,10 @@ class BranchDeleteStep(Step):
         step: Any,
     ) -> Self:
         if "branch-name" not in step:
-            raise ValueError('Missing "branch-name" field in branch step.')
+            raise ValueError('Missing "branch-name" field in branch delete step.')
 
         if step["branch-name"] is None or step["branch-name"].strip() == "":
-            raise ValueError('Empty "branch-name" field in branch step.')
+            raise ValueError('Empty "branch-name" field in branch delete step.')
 
         return cls(
             name=name,
