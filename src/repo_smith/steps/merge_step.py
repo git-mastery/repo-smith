@@ -35,8 +35,11 @@ class MergeStep(Step):
         id: Optional[str],
         step: Any,
     ) -> Self:
-        if step.get("branch-name") is None:
-            raise ValueError('Provide either "branch-name" in merge step.')
+        if "branch-name" not in step:
+            raise ValueError('Missing "branch-name" field in merge step.')
+
+        if step["branch-name"] is None or step["branch-name"].strip() == "":
+            raise ValueError('Empty "branch-name" field in merge step.')
 
         return cls(
             name=name,
