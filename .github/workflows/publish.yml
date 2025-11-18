@@ -30,6 +30,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Run unit tests
+        run: |
+          python -m pytest -s -vv
+
       - name: Build binary
         run: |
           echo "__version__ = \"${GITHUB_REF_NAME}\"" > src/repo_smith/version.py
