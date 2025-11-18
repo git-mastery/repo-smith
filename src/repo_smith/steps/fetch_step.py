@@ -1,8 +1,9 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Any, Optional, Self, Type
 
 from git import Repo
-
 from repo_smith.steps.step import Step
+from repo_smith.steps.step_type import StepType
 
 # TODO: This needs a unit test file
 
@@ -11,6 +12,8 @@ from repo_smith.steps.step import Step
 class FetchStep(Step):
     remote_name: str
 
+    step_type: StepType = field(init=False, default=StepType.FETCH)
+
     def execute(self, repo: Repo) -> None:
         try:
             remote = repo.remote(self.remote_name)
@@ -18,3 +21,21 @@ class FetchStep(Step):
             raise ValueError(f"Missing remote '{self.remote_name}'")
 
         remote.fetch()
+
+    @classmethod
+    def parse(
+        cls: Type[Self],
+        name: Optional[str],
+        description: Optional[str],
+        id: Optional[str],
+        step: Any,
+    ) -> Self:
+        if "remote-name" not in step:
+            raise ValueError('Missing "remote-name" field in fetch step.')
+
+        return cls(
+            name=name,
+            description=description,
+            id=id,
+            remote_name=step["remote-name"],
+        )
