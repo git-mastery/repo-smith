@@ -30,6 +30,9 @@ class CommitStep(Step):
         if "message" not in step:
             raise ValueError('Missing "message" field in commit step.')
 
+        if step["message"] is None or step["message"].strip() == "":
+            raise ValueError('Empty "message" field in commit step.')
+
         return cls(
             name=name,
             description=description,
