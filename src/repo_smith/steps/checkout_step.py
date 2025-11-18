@@ -40,6 +40,17 @@ class CheckoutStep(Step):
                 'Provide either "branch-name" or "commit-hash" in checkout step.'
             )
 
+        if step.get("branch-name") is not None and step.get("commit-hash") is not None:
+            raise ValueError(
+                'Provide either "branch-name" or "commit-hash", not both, in checkout step.'
+            )
+
+        if step.get("branch-name") is not None and step["branch-name"].strip() == "":
+            raise ValueError('Empty "branch-name" field in checkout step.')
+
+        if step.get("commit-hash") is not None and step["commit-hash"].strip() == "":
+            raise ValueError('Empty "commit-hash" field in checkout step.')
+
         return cls(
             name=name,
             description=description,
