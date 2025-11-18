@@ -33,6 +33,9 @@ class FetchStep(Step):
         if "remote-name" not in step:
             raise ValueError('Missing "remote-name" field in fetch step.')
 
+        if step["remote-name"] is None or step["remote-name"].strip() == "":
+            raise ValueError('Empty "remote-name" field in fetch step.')
+
         return cls(
             name=name,
             description=description,
