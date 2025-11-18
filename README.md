@@ -53,3 +53,9 @@ For more use cases of `repo-smith`, refer to:
 
 - [Official specification](/specification.md)
 - [Unit tests](./tests/)
+
+## FAQ
+
+### Why don't you assign every error to a constant and unit test against the constant?
+
+Suppose the constant was `X`, and we unit tested that the error value was `X`, we would not capture any nuances if the value of `X` had changed by accident.
