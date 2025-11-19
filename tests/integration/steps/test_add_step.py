@@ -23,6 +23,7 @@ def test_add_step():
 
     repo_initializer = initialize_repo("tests/specs/add_step/add_step.yml")
     repo_initializer.add_pre_hook("add", pre_hook)
+
     with repo_initializer.initialize() as r:
         assert len(r.index.entries) == 1
         assert ("file.txt", 0) in r.index.entries
