@@ -13,7 +13,7 @@ class BashStep(Step):
 
     step_type: StepType = field(init=False, default=StepType.BASH)
 
-    def execute(self, repo: Repo) -> None:  # type: ignore
+    def execute(self, repo: Repo) -> None:
         subprocess.check_call(self.body.strip(), shell=True, cwd=repo.working_dir)
 
     @classmethod

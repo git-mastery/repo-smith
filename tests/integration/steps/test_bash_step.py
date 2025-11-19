@@ -7,7 +7,12 @@ from src.repo_smith.initialize_repo import initialize_repo
 
 
 def test_bash_step_missing_runs():
-    with pytest.raises(Exception):
+    with pytest.raises(ValueError, match='Missing "runs" field in bash step.'):
+        initialize_repo("tests/specs/bash_step/bash_step_missing_runs.yml")
+
+
+def test_bash_step_empty_runs():
+    with pytest.raises(ValueError, match='Empty "runs" field in bash step.'):
         initialize_repo("tests/specs/bash_step/bash_step_missing_runs.yml")
 
 
