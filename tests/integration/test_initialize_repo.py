@@ -2,6 +2,9 @@ import pytest
 from git import Repo
 from src.repo_smith.initialize_repo import initialize_repo
 
+# TODO: Test to make sure that the YAML parsing is accurate so we avoid individual
+# integration test for every corner case covered in unit tests
+
 
 def test_initialize_repo_missing_spec_path():
     with pytest.raises(ValueError, match="Invalid spec_path provided, not found."):
