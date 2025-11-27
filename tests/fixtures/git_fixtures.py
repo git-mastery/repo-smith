@@ -13,7 +13,7 @@ REMOTE_REPO_PATH = DUMMY_PATH / "remote_repo"
 @pytest.fixture
 def remote_repo() -> Generator[Repo, None, None]:
     os.makedirs(REMOTE_REPO_PATH)
-    repo = Repo.init(REMOTE_REPO_PATH)
+    repo = Repo.init(REMOTE_REPO_PATH, initial_branch="main")
 
     yield repo
 
