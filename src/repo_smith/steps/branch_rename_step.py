@@ -14,6 +14,14 @@ class BranchRenameStep(Step):
     step_type: StepType = field(init=False, default=StepType.BRANCH)
 
     def execute(self, repo: Repo) -> None:
+        if self.original_branch_name not in repo.heads:
+            raise ValueError(
+                '"branch-name" field provided does not correspond to any existing branches in branch-rename step.'
+            )
+        if self.target_branch_name in repo.heads:
+            raise ValueError(
+                '"new-name" field provided corresponds to an existing branch already in branch-rename step.'
+            )
         branch = repo.heads[self.original_branch_name]
         branch.rename(self.target_branch_name)
 

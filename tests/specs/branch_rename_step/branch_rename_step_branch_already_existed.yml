@@ -1,0 +1,12 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Empty
+    - type: branch
+      branch-name: test
+    - type: checkout
+      branch-name: main
+    - type: branch-rename
+      branch-name: test
+      new-name: main
