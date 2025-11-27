@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from os import waitid_result
 from typing import Any, Optional, Self, Type
 
 from git import Repo
@@ -14,6 +13,11 @@ class BranchDeleteStep(Step):
     step_type: StepType = field(init=False, default=StepType.BRANCH_DELETE)
 
     def execute(self, repo: Repo) -> None:
+        current_local_refs = [ref.name for ref in repo.refs]
+        if self.branch_name not in current_local_refs:
+            raise ValueError(
+                '"branch-name" field provided does not correspond to any existing branches in branch-delete step.'
+            )
         repo.delete_head(self.branch_name, force=True)
 
     @classmethod

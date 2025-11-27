@@ -1,0 +1,5 @@
+initialization:
+  steps:
+    - name: Delete branch
+      type: branch-delete
+      branch-name: non-existent
