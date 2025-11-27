@@ -33,7 +33,7 @@ class RepoInitializer:
             if self.__spec.clone_from is not None:
                 repo = Repo.clone_from(self.__spec.clone_from.repo_url, tmp_dir)
             else:
-                repo = Repo.init(tmp_dir)
+                repo = Repo.init(tmp_dir, initial_branch="main")
 
             for step in self.__spec.steps:
                 if step.id in self.__pre_hooks:
