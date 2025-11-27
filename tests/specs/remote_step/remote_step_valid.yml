@@ -1,0 +1,8 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Empty
+    - type: remote
+      remote-name: upstream
+      remote-url: https://github.com/git-mastery/repo-smith.git
