@@ -1,15 +1,17 @@
-from dataclasses import dataclass
-from typing import Optional
+from dataclasses import dataclass, field
+from typing import Any, Optional, Self, Type
 
 from git import BadName, Repo
-
 from repo_smith.steps.step import Step
+from repo_smith.steps.step_type import StepType
 
 
 @dataclass
 class CheckoutStep(Step):
     branch_name: Optional[str]
     commit_hash: Optional[str]
+
+    step_type: StepType = field(init=False, default=StepType.CHECKOUT)
 
     def execute(self, repo: Repo) -> None:
         if self.branch_name is not None:
@@ -24,3 +26,35 @@ class CheckoutStep(Step):
                 repo.git.checkout(commit)
             except (ValueError, BadName):
                 raise ValueError("Commit not found")
+
+    @classmethod
+    def parse(
+        cls: Type[Self],
+        name: Optional[str],
+        description: Optional[str],
+        id: Optional[str],
+        step: Any,
+    ) -> Self:
+        if step.get("branch-name") is None and step.get("commit-hash") is None:
+            raise ValueError(
+                'Provide either "branch-name" or "commit-hash" in checkout step.'
+            )
+
+        if step.get("branch-name") is not None and step.get("commit-hash") is not None:
+            raise ValueError(
+                'Provide either "branch-name" or "commit-hash", not both, in checkout step.'
+            )
+
+        if step.get("branch-name") is not None and step["branch-name"].strip() == "":
+            raise ValueError('Empty "branch-name" field in checkout step.')
+
+        if step.get("commit-hash") is not None and step["commit-hash"].strip() == "":
+            raise ValueError('Empty "commit-hash" field in checkout step.')
+
+        return cls(
+            name=name,
+            description=description,
+            id=id,
+            branch_name=step.get("branch-name"),
+            commit_hash=step.get("commit-hash"),
+        )

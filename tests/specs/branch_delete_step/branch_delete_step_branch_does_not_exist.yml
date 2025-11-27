@@ -1,0 +1,7 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Empty
+    - type: branch-delete
+      branch-name: test
