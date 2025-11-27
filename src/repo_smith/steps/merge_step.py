@@ -15,6 +15,7 @@ class MergeStep(Step):
     step_type: StepType = field(init=False, default=StepType.MERGE)
 
     def execute(self, repo: Repo) -> None:
+        # TODO: Maybe handle merge conflicts as they happen
         merge_args = [self.branch_name, "--no-edit"]
 
         if self.squash:

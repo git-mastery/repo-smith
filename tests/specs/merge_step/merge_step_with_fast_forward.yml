@@ -1,0 +1,31 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Before
+
+    - type: branch
+      branch-name: incoming
+    - type: new-file
+      filename: hello.txt
+      contents: |
+        Hello
+    - type: add
+      files:
+        - hello.txt
+    - type: commit
+      message: Add hello.txt
+    - type: commit
+      empty: true
+      message: Empty
+    - type: commit
+      empty: true
+      message: Empty
+
+    - type: checkout
+      branch-name: main
+    - type: merge
+      branch-name: incoming
+    - type: commit
+      empty: true
+      message: After
