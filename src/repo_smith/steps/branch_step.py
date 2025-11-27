@@ -13,6 +13,7 @@ class BranchStep(Step):
     step_type: StepType = field(init=False, default=StepType.BRANCH)
 
     def execute(self, repo: Repo) -> None:
+        # TODO: Handle when attempting to create a branch when no commits exist
         branch = repo.create_head(self.branch_name)
         branch.checkout()
 
