@@ -5,8 +5,6 @@ from git import Repo
 from repo_smith.steps.step import Step
 from repo_smith.steps.step_type import StepType
 
-# TODO: This needs a unit test file
-
 
 @dataclass
 class FetchStep(Step):
@@ -18,7 +16,7 @@ class FetchStep(Step):
         try:
             remote = repo.remote(self.remote_name)
         except Exception:
-            raise ValueError(f"Missing remote '{self.remote_name}'")
+            raise ValueError(f"Missing remote '{self.remote_name}' in fetch step.")
 
         remote.fetch()
 

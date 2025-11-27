@@ -105,7 +105,7 @@ class RepoInitializer:
     def __parse_spec(self, spec: Any) -> Spec:
         steps = []
 
-        for step in spec.get("initialization", {}).get("steps", []):
+        for step in spec.get("initialization", {}).get("steps", []) or []:
             steps.append(Dispatcher.dispatch(step))
 
         clone_from = None
