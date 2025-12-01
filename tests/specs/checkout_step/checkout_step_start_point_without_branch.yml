@@ -1,0 +1,9 @@
+name: Checkout step start-point without branch
+description: Checkout step start-point without branch raises error
+initialization:
+  steps:
+    - type: commit
+      message: test commit
+      empty: true
+    - type: checkout
+      start-point: HEAD~1

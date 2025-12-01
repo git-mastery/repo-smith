@@ -1,0 +1,14 @@
+name: Checkout step with start-point
+description: Checkout creating a new branch at a specific commit
+initialization:
+  steps:
+    - type: commit
+      message: first commit
+      empty: true
+    - type: commit
+      message: second commit
+      empty: true
+    - type: checkout
+      branch-name: new-branch
+      start-point: HEAD~1
+      id: checkout-with-start-point
