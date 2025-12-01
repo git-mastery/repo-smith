@@ -207,6 +207,20 @@ Commit hash. Only read if `initialization.steps[*].type` is `checkout`.
 
 Type: `string`
 
+#### `initialization.steps[*].start-point`
+
+Starting point for creating a new branch. Only read if
+`initialization.steps[*].type` is `checkout`.
+
+When provided, `branch-name` must also be specified and the branch must not
+already exist. This creates a new branch at the specified commit reference
+(equivalent to `git checkout -b <branch-name> <start-point>`).
+
+Accepts any valid git revision: commit SHAs, relative references (e.g.,
+`HEAD~1`), branch names, or tags.
+
+Type: `string`
+
 #### `initialization.steps[*].remote-name`
 
 Remote name. Only read if `initialization.steps[*].type` is `remote` or `fetch`.
