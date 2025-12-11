@@ -1,0 +1,5 @@
+initialization:
+  clone-from: https://github.com/git-mastery/gm-sensors
+  steps:
+    - type: revert
+      commit: HEAD~3
