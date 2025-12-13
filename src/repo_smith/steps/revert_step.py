@@ -8,12 +8,12 @@ from repo_smith.steps.step_type import StepType
 
 @dataclass
 class RevertStep(Step):
-    commit: str
+    revision: str
 
     step_type: StepType = field(init=False, default=StepType.REVERT)
 
     def execute(self, repo: Repo) -> None:
-        revert_args = [self.commit, "--no-edit"]
+        revert_args = [self.revision, "--no-edit"]
 
         repo.git.revert(*revert_args)
 
@@ -25,15 +25,15 @@ class RevertStep(Step):
         id: Optional[str],
         step: Any,
     ) -> Self:
-        if "commit" not in step:
-            raise ValueError('Missing "commit" field in revert step.')
+        if "revision" not in step:
+            raise ValueError('Missing "revision" field in revert step.')
 
-        if step["commit"] is None or step["commit"].strip() == "":
-            raise ValueError('Empty "commit" field in revert step.')
+        if step["revision"] is None or step["revision"].strip() == "":
+            raise ValueError('Empty "revision" field in revert step.')
 
         return cls(
             name=name,
             description=description,
             id=id,
-            commit=step["commit"],
+            revision=step["revision"],
         )

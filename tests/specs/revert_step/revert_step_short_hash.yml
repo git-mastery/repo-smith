@@ -2,4 +2,4 @@ initialization:
   clone-from: https://github.com/git-mastery/gm-sensors
   steps:
     - type: revert
-      revision: dbac57019977296abff9e4f687f587c4a2d24f02
+      revision: dbac570

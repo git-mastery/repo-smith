@@ -1,5 +1,5 @@
 initialization:
-  clone-from: https://github.com/git-mastery/gm-sensors
+  clone-from: tests/dummy/remote_repo
   steps:
     - type: revert
-      commit: HEAD~3
+      revision: HEAD~3

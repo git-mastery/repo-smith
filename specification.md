@@ -207,9 +207,9 @@ Commit hash. Only read if `initialization.steps[*].type` is `checkout`.
 
 Type: `string`
 
-#### `initialization.steps[*].commit`
+#### `initialization.steps[*].revision`
 
-Commit to be reverted. May be hash or reference. Only read if `initialization.steps[*].type` is `revert`.
+Revision to be reverted. May be hash or reference. Only read if `initialization.steps[*].type` is `revert`.
 
 Type: `string`
 
