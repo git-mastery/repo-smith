@@ -18,7 +18,9 @@ class CheckoutStep(Step):
         if self.branch_name is not None:
             if self.start_point is not None:
                 if self.branch_name in repo.heads:
-                    raise ValueError('"start-point" cannot be provided when "branch-name" already exists in checkout step.')
+                    raise ValueError(
+                        '"start-point" cannot be provided when "branch-name" already exists in checkout step.'
+                    )
                 repo.git.checkout("-b", self.branch_name, self.start_point)
             elif self.branch_name not in repo.heads:
                 raise ValueError("Invalid branch name")
@@ -49,14 +51,14 @@ class CheckoutStep(Step):
             raise ValueError(
                 'Provide either "branch-name" or "commit-hash", not both, in checkout step.'
             )
-        
-        if step.get("start-point") is not None and step.get("branch-name") is None:
-            raise ValueError(
-                '"start-point" requires "branch-name" to be provided in checkout step.'
-            )
 
         if step.get("branch-name") is not None and step["branch-name"].strip() == "":
             raise ValueError('Empty "branch-name" field in checkout step.')
+
+        if step.get("branch-name") is None and step.get("start-point") is not None:
+            raise ValueError(
+                '"start-point" requires "branch-name" to be provided in checkout step.'
+            )
 
         if step.get("commit-hash") is not None and step["commit-hash"].strip() == "":
             raise ValueError('Empty "commit-hash" field in checkout step.')

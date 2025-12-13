@@ -64,14 +64,11 @@ def test_checkout_step():
 
 
 def test_checkout_step_with_start_point():
-    def checkout_hook(r: Repo) -> None:
-        assert r.active_branch.name == "new-branch"
-
     repo_initializer = initialize_repo(
         "tests/specs/checkout_step/checkout_step_with_start_point.yml"
     )
-    repo_initializer.add_post_hook("checkout-with-start-point", checkout_hook)
     with repo_initializer.initialize() as r:
+        assert r.active_branch.name == "new-branch"
         assert len(r.branches) == 2
         assert "new-branch" in r.heads
         assert r.heads["new-branch"].commit.message.strip() == "first commit"
