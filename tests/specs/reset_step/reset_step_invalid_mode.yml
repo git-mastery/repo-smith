@@ -1,0 +1,10 @@
+name: Reset step invalid mode
+description: Test error case when mode is invalid
+initialization:
+  steps:
+    - type: commit
+      message: Initial commit
+      empty: true
+    - type: reset
+      ref: HEAD
+      mode: invalid

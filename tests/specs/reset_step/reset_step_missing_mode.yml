@@ -1,0 +1,9 @@
+name: Reset step missing mode
+description: Test error case when mode is missing
+initialization:
+  steps:
+    - type: commit
+      message: Initial commit
+      empty: true
+    - type: reset
+      ref: HEAD

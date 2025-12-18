@@ -1,0 +1,18 @@
+name: Reset step paths with hard mode
+description: Test error case when paths is used with hard mode
+initialization:
+  steps:
+    - type: new-file
+      filename: file1.txt
+      contents: |
+        Content
+    - type: add
+      files:
+        - file1.txt
+    - type: commit
+      message: Initial commit
+    - type: reset
+      ref: HEAD
+      mode: hard
+      files:
+        - file1.txt
