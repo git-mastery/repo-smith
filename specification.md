@@ -105,6 +105,7 @@ Accepted values include:
 - `branch`
 - `checkout`
 - `remote`
+- `reset`
 - `merge`
 - `fetch`
 - `branch-rename`
@@ -113,7 +114,6 @@ Accepted values include:
 More action types will be supported in the future:
 
 - `revert`
-- `reset`
 
 #### `initialization.steps[*].empty`
 
@@ -130,8 +130,14 @@ Type: `string`
 
 #### `initialization.steps[*].files`
 
-File names to be added to the Git repository. Only read if
-`initialization.steps[*].type` is `add`.
+File names to be added or reset. Read if `initialization.steps[*].type` is
+`add` or `reset`.
+
+For `add`: Files to add to the staging area.
+
+For `reset`: Specific files to reset in the staging area (optional). When
+`files` is provided with reset, only the specified files are unstaged. 
+`mode` must be `mixed`.
 
 Type: `list`
 
@@ -218,6 +224,22 @@ Type: `string`
 Remote URL. Only read if `initialization.steps[*].type` is `remote`.
 
 Type: `string`
+
+#### `initialization.steps[*].ref`
+
+Git reference (commit, branch, tag, or relative ref like `HEAD~1`) to reset to.
+Only read if `initialization.steps[*].type` is `reset`. Required.
+
+Type: `string`
+
+#### `initialization.steps[*].mode`
+
+Reset mode. Only read if `initialization.steps[*].type` is `reset`. Required.
+
+Accepted values: `soft`, `mixed`, `hard`
+
+Type: `string`
+
 
 ## Lifecycle hooks
 
