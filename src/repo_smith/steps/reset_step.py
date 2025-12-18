@@ -33,7 +33,7 @@ class ResetStep(Step):
         if "mode" not in step:
             raise ValueError('Missing "mode" field in reset step.')
 
-        if step["mode"] is None or step["mode"].strip() not in VALID_MODES:
+        if step["mode"] is None or step["mode"].strip().lower() not in VALID_MODES:
             raise ValueError(f'Invalid "mode" value. Must be one of: {VALID_MODES}.')
 
         if "ref" not in step:
