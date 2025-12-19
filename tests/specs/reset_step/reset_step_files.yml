@@ -1,5 +1,5 @@
 name: Reset step with paths
-description: Test reset with path, ref and mode
+description: Test reset with path, revision and mode
 initialization:
   steps:
     - type: new-file
