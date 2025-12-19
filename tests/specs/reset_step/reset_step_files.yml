@@ -33,7 +33,7 @@ initialization:
       id: staged
 
     - type: reset
-      ref: HEAD
+      revision: HEAD
       mode: mixed
       files:
         - file1.txt

@@ -213,6 +213,13 @@ Commit hash. Only read if `initialization.steps[*].type` is `checkout`.
 
 Type: `string`
 
+#### `initialization.steps[*].revision`
+
+Git reference (commit, branch, tag, or relative ref like `HEAD~1`) to reset to.
+Only read if `initialization.steps[*].type` is `reset`. Required.
+
+Type: `string`
+
 #### `initialization.steps[*].remote-name`
 
 Remote name. Only read if `initialization.steps[*].type` is `remote` or `fetch`.
@@ -222,13 +229,6 @@ Type: `string`
 #### `initialization.steps[*].remote-url`
 
 Remote URL. Only read if `initialization.steps[*].type` is `remote`.
-
-Type: `string`
-
-#### `initialization.steps[*].ref`
-
-Git reference (commit, branch, tag, or relative ref like `HEAD~1`) to reset to.
-Only read if `initialization.steps[*].type` is `reset`. Required.
 
 Type: `string`
 

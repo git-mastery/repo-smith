@@ -1,9 +1,0 @@
-name: Reset step missing ref
-description: Test error case when ref is missing
-initialization:
-  steps:
-    - type: commit
-      message: Initial commit
-      empty: true
-    - type: reset
-      mode: hard

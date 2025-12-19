@@ -10,7 +10,7 @@ VALID_MODES = ("soft", "mixed", "hard")
 
 @dataclass
 class ResetStep(Step):
-    ref: Optional[str]
+    revision: Optional[str]
     mode: str
     files: Optional[List[str]]
 
@@ -18,9 +18,9 @@ class ResetStep(Step):
 
     def execute(self, repo: Repo) -> None:
         if self.files:
-            repo.git.reset(self.ref, "--", *self.files)
+            repo.git.reset(self.revision, "--", *self.files)
         else:
-            repo.git.reset(f"--{self.mode}", self.ref)
+            repo.git.reset(f"--{self.mode}", self.revision)
 
     @classmethod
     def parse(
@@ -36,11 +36,11 @@ class ResetStep(Step):
         if step["mode"] is None or step["mode"].strip().lower() not in VALID_MODES:
             raise ValueError(f'Invalid "mode" value. Must be one of: {VALID_MODES}.')
 
-        if "ref" not in step:
-            raise ValueError('Missing "ref" field in reset step.')
+        if "revision" not in step:
+            raise ValueError('Missing "revision" field in reset step.')
 
-        if step["ref"] is None or step["ref"].strip() == "":
-            raise ValueError('Empty "ref" field in reset step.')
+        if step["revision"] is None or step["revision"].strip() == "":
+            raise ValueError('Empty "revision" field in reset step.')
 
         if "files" in step and step["files"] is not None:
             if step["files"] == []:
@@ -48,14 +48,14 @@ class ResetStep(Step):
 
             if step["mode"] != "mixed":
                 raise ValueError(
-                    f'Cannot use "files" with "{step["mode"]}" mode in reset step. Only "mixed" mode is allowed with files.'
+                    f'Cannot use "files" field with "{step["mode"]}" mode in reset step. Only "mixed" mode is allowed with files.'
                 )
 
         return cls(
             name=name,
             description=description,
             id=id,
-            ref=step["ref"],
+            revision=step["revision"],
             mode=step["mode"],
             files=step.get("files", None),
         )

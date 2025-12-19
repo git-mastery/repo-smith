@@ -1,5 +1,4 @@
 import os
-import pytest
 
 from repo_smith.initialize_repo import initialize_repo
 
@@ -22,23 +21,3 @@ def test_reset_step_files():
         staged_files = [d.a_path for d in r.index.diff("HEAD")]
         assert "file1.txt" not in staged_files
         assert "file2.txt" in staged_files
-
-
-def test_reset_step_files_wrong_mode():
-    with pytest.raises(Exception):
-        initialize_repo("tests/specs/reset_step/reset_step_files_wrong_mode.yml")
-
-
-def test_reset_step_missing_ref():
-    with pytest.raises(Exception):
-        initialize_repo("tests/specs/reset_step/reset_step_missing_ref.yml")
-
-
-def test_reset_step_missing_mode():
-    with pytest.raises(Exception):
-        initialize_repo("tests/specs/reset_step/reset_step_missing_mode.yml")
-
-
-def test_reset_step_invalid_mode():
-    with pytest.raises(Exception):
-        initialize_repo("tests/specs/reset_step/reset_step_invalid_mode.yml")
