@@ -19,7 +19,7 @@ class CheckoutStep(Step):
             if self.start_point is not None:
                 if self.branch_name in repo.heads:
                     raise ValueError(
-                        '"start-point" cannot be provided when "branch-name" already exists in checkout step.'
+                        f'Branch "{self.branch_name}" already exists. Cannot use "start-point" with an existing branch in checkout step.'
                     )
                 repo.git.checkout("-b", self.branch_name, self.start_point)
             elif self.branch_name not in repo.heads:
@@ -57,7 +57,7 @@ class CheckoutStep(Step):
 
         if step.get("branch-name") is None and step.get("start-point") is not None:
             raise ValueError(
-                '"start-point" requires "branch-name" to be provided in checkout step.'
+                '"start-point" field requires "branch-name" field to be provided in checkout step.'
             )
 
         if step.get("commit-hash") is not None and step["commit-hash"].strip() == "":
