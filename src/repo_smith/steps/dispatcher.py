@@ -17,6 +17,7 @@ from repo_smith.steps.file_step import (
 from repo_smith.steps.merge_step import MergeStep
 from repo_smith.steps.remote_step import RemoteStep
 from repo_smith.steps.reset_step import ResetStep
+from repo_smith.steps.revert_step import RevertStep
 from repo_smith.steps.step import Step
 from repo_smith.steps.step_type import StepType
 from repo_smith.steps.tag_step import TagStep
@@ -60,6 +61,8 @@ class Dispatcher:
                 return RemoteStep
             case StepType.RESET:
                 return ResetStep
+            case StepType.REVERT:
+                return RevertStep
             case StepType.FETCH:
                 return FetchStep
             case StepType.NEW_FILE:

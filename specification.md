@@ -106,14 +106,12 @@ Accepted values include:
 - `checkout`
 - `remote`
 - `reset`
+- `revert`
 - `merge`
 - `fetch`
 - `branch-rename`
 - `branch-delete`
 
-More action types will be supported in the future:
-
-- `revert`
 
 #### `initialization.steps[*].empty`
 
@@ -213,10 +211,24 @@ Commit hash. Only read if `initialization.steps[*].type` is `checkout`.
 
 Type: `string`
 
+#### `initialization.steps[*].start-point`
+
+Starting point for creating a new branch. Only read if
+`initialization.steps[*].type` is `checkout`.
+
+When provided, `branch-name` must also be specified and the branch must not
+already exist. This creates a new branch at the specified commit reference
+(equivalent to `git checkout -b <branch-name> <start-point>`).
+
+Accepts any valid git revision: commit SHAs, relative references (e.g.,
+`HEAD~1`), branch names, or tags.
+
+Type: `string`
+
 #### `initialization.steps[*].revision`
 
-Git reference (commit, branch, tag, or relative ref like `HEAD~1`) to reset to.
-Only read if `initialization.steps[*].type` is `reset`. Required.
+Git reference (commit, branch, tag, or relative ref like `HEAD~1`) to reset or revert to.
+Only read if `initialization.steps[*].type` is `reset` or `revert`. Required.
 
 Type: `string`
 
