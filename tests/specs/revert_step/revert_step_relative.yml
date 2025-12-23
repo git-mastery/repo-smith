@@ -1,0 +1,5 @@
+initialization:
+  clone-from: tests/dummy/remote_repo
+  steps:
+    - type: revert
+      revision: HEAD~3

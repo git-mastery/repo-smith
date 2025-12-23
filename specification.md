@@ -109,10 +109,10 @@ Accepted values include:
 - `fetch`
 - `branch-rename`
 - `branch-delete`
+- `revert`
 
 More action types will be supported in the future:
 
-- `revert`
 - `reset`
 
 #### `initialization.steps[*].empty`
@@ -218,6 +218,10 @@ already exist. This creates a new branch at the specified commit reference
 
 Accepts any valid git revision: commit SHAs, relative references (e.g.,
 `HEAD~1`), branch names, or tags.
+
+#### `initialization.steps[*].revision`
+
+Revision to be reverted. May be hash or reference. Only read if `initialization.steps[*].type` is `revert`.
 
 Type: `string`
 
