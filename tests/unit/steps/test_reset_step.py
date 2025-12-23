@@ -27,41 +27,50 @@ def test_reset_step_parse_with_files():
 
 
 def test_reset_step_parse_missing_mode():
-    with pytest.raises(ValueError, match='Missing "mode" field in reset step'):
+    with pytest.raises(ValueError, match='Missing "mode" field in reset step.'):
         ResetStep.parse("n", "d", "id", {"revision": "HEAD~1"})
 
 
 def test_reset_step_parse_missing_revision():
-    with pytest.raises(ValueError, match='Missing "revision" field in reset step'):
+    with pytest.raises(ValueError, match='Missing "revision" field in reset step.'):
         ResetStep.parse("n", "d", "id", {"mode": "hard"})
 
 
 def test_reset_step_parse_empty_revision():
-    with pytest.raises(ValueError, match='Empty "revision" field in reset step'):
+    with pytest.raises(ValueError, match='Empty "revision" field in reset step.'):
         ResetStep.parse("n", "d", "id", {"revision": "", "mode": "hard"})
 
 
 def test_reset_step_parse_invalid_mode():
-    with pytest.raises(ValueError, match='Invalid "mode" value'):
+    with pytest.raises(
+        ValueError,
+        match="Invalid \"mode\" value. Must be one of: \\('soft', 'mixed', 'hard'\\).",
+    ):
         ResetStep.parse("n", "d", "id", {"revision": "HEAD~1", "mode": "invalid"})
 
 
 def test_reset_step_parse_empty_files_list():
-    with pytest.raises(ValueError, match='Empty "files" list in reset step'):
+    with pytest.raises(ValueError, match='Empty "files" list in reset step.'):
         ResetStep.parse(
             "n", "d", "id", {"revision": "HEAD", "mode": "mixed", "files": []}
         )
 
 
 def test_reset_step_parse_files_with_soft_mode():
-    with pytest.raises(ValueError, match='Cannot use "files" field with "soft" mode'):
+    with pytest.raises(
+        ValueError,
+        match='Cannot use "files" field with "soft" mode in reset step. Only "mixed" mode is allowed with files.',
+    ):
         ResetStep.parse(
             "n", "d", "id", {"revision": "HEAD", "mode": "soft", "files": ["file.txt"]}
         )
 
 
 def test_reset_step_parse_files_with_hard_mode():
-    with pytest.raises(ValueError, match='Cannot use "files" field with "hard" mode'):
+    with pytest.raises(
+        ValueError,
+        match='Cannot use "files" field with "hard" mode in reset step. Only "mixed" mode is allowed with files.',
+    ):
         ResetStep.parse(
             "n", "d", "id", {"revision": "HEAD", "mode": "hard", "files": ["file.txt"]}
         )
