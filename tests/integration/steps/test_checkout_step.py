@@ -25,6 +25,29 @@ def test_checkout_step_missing_branch():
             pass
 
 
+def test_checkout_step_start_point_without_branch():
+    with pytest.raises(Exception):
+        initialize_repo(
+            "tests/specs/checkout_step/checkout_step_start_point_without_branch.yml"
+        )
+
+
+def test_checkout_step_start_point_with_commit_hash():
+    with pytest.raises(Exception):
+        initialize_repo(
+            "tests/specs/checkout_step/checkout_step_start_point_with_commit_hash.yml"
+        )
+
+
+def test_checkout_step_start_point_branch_exists():
+    with pytest.raises(Exception):
+        repo_initializer = initialize_repo(
+            "tests/specs/checkout_step/checkout_step_start_point_branch_exists.yml"
+        )
+        with repo_initializer.initialize():
+            pass
+
+
 def test_checkout_step():
     def first_hook(r: Repo) -> None:
         assert r.active_branch.name == "main"
@@ -38,3 +61,14 @@ def test_checkout_step():
     with repo_initializer.initialize() as r:
         assert len(r.branches) == 2
         assert "test" in r.heads
+
+
+def test_checkout_step_with_start_point():
+    repo_initializer = initialize_repo(
+        "tests/specs/checkout_step/checkout_step_with_start_point.yml"
+    )
+    with repo_initializer.initialize() as r:
+        assert r.active_branch.name == "new-branch"
+        assert len(r.branches) == 2
+        assert "new-branch" in r.heads
+        assert r.heads["new-branch"].commit.message.strip() == "first commit"
