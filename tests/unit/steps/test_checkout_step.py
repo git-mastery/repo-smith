@@ -24,9 +24,11 @@ def test_checkout_step_parse_both_branch_name_and_commit_hash():
 def test_checkout_step_parse_start_point_with_commit_hash():
     with pytest.raises(
         ValueError,
-        match='"start-point" requires "branch-name" to be provided in checkout step.',
+        match='"start-point" field requires "branch-name" field to be provided in checkout step.',
     ):
-        CheckoutStep.parse("n", "d", "id", {"start-point": "HEAD~1", "commit-hash": "abc123"})
+        CheckoutStep.parse(
+            "n", "d", "id", {"start-point": "HEAD~1", "commit-hash": "abc123"}
+        )
 
 
 def test_checkout_step_parse_empty_branch_name():
@@ -67,7 +69,9 @@ def test_checkout_step_parse_with_commit_hash():
 
 
 def test_checkout_step_parse_with_start_point():
-    step = CheckoutStep.parse("n", "d", "id", {"branch-name": "test", "start-point": "HEAD~1"})
+    step = CheckoutStep.parse(
+        "n", "d", "id", {"branch-name": "test", "start-point": "HEAD~1"}
+    )
     assert isinstance(step, CheckoutStep)
     assert step.name == "n"
     assert step.description == "d"
