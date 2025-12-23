@@ -109,10 +109,10 @@ Accepted values include:
 - `fetch`
 - `branch-rename`
 - `branch-delete`
+- `revert`
 
 More action types will be supported in the future:
 
-- `revert`
 - `reset`
 
 #### `initialization.steps[*].empty`
@@ -204,6 +204,12 @@ Type: `bool`
 #### `initialization.steps[*].commit-hash`
 
 Commit hash. Only read if `initialization.steps[*].type` is `checkout`.
+
+Type: `string`
+
+#### `initialization.steps[*].revision`
+
+Revision to be reverted. May be hash or reference. Only read if `initialization.steps[*].type` is `revert`.
 
 Type: `string`
 
