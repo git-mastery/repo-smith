@@ -1,0 +1,28 @@
+name: Reset step hard mode
+description: Test reset with --hard mode
+initialization:
+  steps:
+    - type: new-file
+      filename: file1.txt
+      contents: |
+        Initial content
+    - type: add
+      files:
+        - file1.txt
+    - type: commit
+      message: Initial commit
+      id: initial
+
+    - type: edit-file
+      filename: file1.txt
+      contents: |
+        Modified content
+    - type: add
+      files:
+        - file1.txt
+    - type: commit
+      message: Second commit
+
+    - type: reset
+      revision: HEAD~1
+      mode: hard

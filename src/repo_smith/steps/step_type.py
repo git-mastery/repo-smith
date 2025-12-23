@@ -15,6 +15,7 @@ class StepType(Enum):
     BRANCH_DELETE = "branch-delete"
     CHECKOUT = "checkout"
     REMOTE = "remote"
+    RESET = "reset"
     REVERT = "revert"
     MERGE = "merge"
     FETCH = "fetch"
@@ -48,6 +49,8 @@ class StepType(Enum):
                 return StepType.CHECKOUT
             case "remote":
                 return StepType.REMOTE
+            case "reset":
+                return StepType.RESET
             case "revert":
                 return StepType.REVERT
             case "merge":

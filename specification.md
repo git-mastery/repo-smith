@@ -105,15 +105,13 @@ Accepted values include:
 - `branch`
 - `checkout`
 - `remote`
+- `reset`
+- `revert`
 - `merge`
 - `fetch`
 - `branch-rename`
 - `branch-delete`
-- `revert`
 
-More action types will be supported in the future:
-
-- `reset`
 
 #### `initialization.steps[*].empty`
 
@@ -130,8 +128,14 @@ Type: `string`
 
 #### `initialization.steps[*].files`
 
-File names to be added to the Git repository. Only read if
-`initialization.steps[*].type` is `add`.
+File names to be added or reset. Read if `initialization.steps[*].type` is
+`add` or `reset`.
+
+For `add`: Files to add to the staging area.
+
+For `reset`: Specific files to reset in the staging area (optional). When
+`files` is provided with reset, only the specified files are unstaged. 
+`mode` must be `mixed`.
 
 Type: `list`
 
@@ -219,9 +223,12 @@ already exist. This creates a new branch at the specified commit reference
 Accepts any valid git revision: commit SHAs, relative references (e.g.,
 `HEAD~1`), branch names, or tags.
 
+Type: `string`
+
 #### `initialization.steps[*].revision`
 
-Revision to be reverted. May be hash or reference. Only read if `initialization.steps[*].type` is `revert`.
+Git reference (commit, branch, tag, or relative ref like `HEAD~1`) to reset or revert to.
+Only read if `initialization.steps[*].type` is `reset` or `revert`. Required.
 
 Type: `string`
 
@@ -236,6 +243,15 @@ Type: `string`
 Remote URL. Only read if `initialization.steps[*].type` is `remote`.
 
 Type: `string`
+
+#### `initialization.steps[*].mode`
+
+Reset mode. Only read if `initialization.steps[*].type` is `reset`. Required.
+
+Accepted values: `soft`, `mixed`, `hard`
+
+Type: `string`
+
 
 ## Lifecycle hooks
 

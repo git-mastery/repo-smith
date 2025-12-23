@@ -1,0 +1,39 @@
+name: Reset step with paths
+description: Test reset with path, revision and mode
+initialization:
+  steps:
+    - type: new-file
+      filename: file1.txt
+      contents: |
+        Initial content 1
+    - type: new-file
+      filename: file2.txt
+      contents: |
+        Initial content 2
+    - type: add
+      files:
+        - file1.txt
+        - file2.txt
+    - type: commit
+      message: Initial commit
+      id: initial
+
+    - type: edit-file
+      filename: file1.txt
+      contents: |
+        Modified content 1
+    - type: edit-file
+      filename: file2.txt
+      contents: |
+        Modified content 2
+    - type: add
+      files:
+        - file1.txt
+        - file2.txt
+      id: staged
+
+    - type: reset
+      revision: HEAD
+      mode: mixed
+      files:
+        - file1.txt
