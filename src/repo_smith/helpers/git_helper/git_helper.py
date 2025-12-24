@@ -45,7 +45,7 @@ class GitHelper(Helper):
         """
         if files is None:
             files = []
-        elif isinstance(files, "str"):
+        elif isinstance(files, str):
             files = [files]
         args = ["git", "add", *files] + ADD_SPEC.build(options)
         self.run(args)
