@@ -11,7 +11,7 @@ class MergeOptions(TypedDict, total=False):
     no_ff: bool
     ff_only: bool
 
-    sqaush: bool
+    squash: bool
     no_squash: bool
 
     message: str
