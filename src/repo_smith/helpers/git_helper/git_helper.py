@@ -8,6 +8,7 @@ from repo_smith.helpers.git_helper.checkout_options import (
     CheckoutOptions,
 )
 from repo_smith.helpers.git_helper.commit_options import COMMIT_SPEC, CommitOptions
+from repo_smith.helpers.git_helper.merge_options import MERGE_SPEC, MergeOptions
 from repo_smith.helpers.git_helper.remote_options import (
     REMOTE_ADD_SPEC,
     RemoteAddOptions,
@@ -161,4 +162,18 @@ class GitHelper(Helper):
         elif isinstance(pathspec, str):
             pathspec = [pathspec]
         args = ["git", "restore"] + RESTORE_SPEC.build(options) + pathspec
+        self.run(args)
+
+    def merge(
+        self,
+        commits: Union[str, List[str]],
+        **options: Unpack[MergeOptions],
+    ) -> None:
+        """Calls the underlying git-merge command with the given support options.
+
+        More information about the git-merge command can be found `here <https://git-scm.com/docs/git-merge>`__.
+        """
+        if isinstance(commits, str):
+            commits = [commits]
+        args = ["git", "merge"] + MERGE_SPEC.build(options) + commits
         self.run(args)
