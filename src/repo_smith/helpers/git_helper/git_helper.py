@@ -1,13 +1,13 @@
 from typing import List, Optional, Union, Unpack
 
 from git import Repo
-
 from repo_smith.helpers.git_helper.add_options import ADD_SPEC, AddOptions
 from repo_smith.helpers.git_helper.checkout_options import (
     CHECKOUT_SPEC,
     CheckoutOptions,
 )
 from repo_smith.helpers.git_helper.commit_options import COMMIT_SPEC, CommitOptions
+from repo_smith.helpers.git_helper.fetch_options import FETCH_SPEC, FetchOptions
 from repo_smith.helpers.git_helper.merge_options import MERGE_SPEC, MergeOptions
 from repo_smith.helpers.git_helper.remote_options import (
     REMOTE_ADD_SPEC,
@@ -176,4 +176,21 @@ class GitHelper(Helper):
         if isinstance(commits, str):
             commits = [commits]
         args = ["git", "merge"] + MERGE_SPEC.build(options) + commits
+        self.run(args)
+
+    def fetch(
+        self,
+        repository: Optional[str] = None,
+        **options: Unpack[FetchOptions],
+    ) -> None:
+        """Calls the underlying git-fetch command with the given support options.
+
+        More information about the git-fetch command can be found `here <https://git-scm.com/docs/git-fetch>`__.
+        """
+        if repository is None and not options.get("all"):
+            raise ValueError(
+                "Specify the repository as a URL or remote if --all not used."
+            )
+        trailing = [repository] if repository is not None else []
+        args = ["git", "fetch"] + FETCH_SPEC.build(options) + trailing
         self.run(args)
