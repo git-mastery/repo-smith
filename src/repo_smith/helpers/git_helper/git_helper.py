@@ -2,6 +2,7 @@ from typing import List, Optional, Union, Unpack
 
 from git import Repo
 from repo_smith.helpers.git_helper.add_options import ADD_SPEC, AddOptions
+from repo_smith.helpers.git_helper.branch_options import BRANCH_SPEC, BranchOptions
 from repo_smith.helpers.git_helper.checkout_options import (
     CHECKOUT_SPEC,
     CheckoutOptions,
@@ -193,4 +194,38 @@ class GitHelper(Helper):
             )
         trailing = [repository] if repository is not None else []
         args = ["git", "fetch"] + FETCH_SPEC.build(options) + trailing
+        self.run(args)
+
+    def branch(
+        self,
+        branch_name: str,
+        start_point: Optional[str] = None,
+        old_branch: Optional[str] = None,
+        **options: Unpack[BranchOptions],
+    ) -> None:
+        """Calls the underlying git-branch command with the given support options.
+
+        More information about the git-branch command can be found `here <https://git-scm.com/docs/git-branch>`__.
+        """
+        if options.get("move", False) or options.get("copy", False):
+            if old_branch is None:
+                raise ValueError(
+                    "You must specify the old_branch when using --move or --copy."
+                )
+            args = [
+                "git",
+                "branch",
+                "--move" if options.get("move", False) else "--copy",
+                old_branch,
+                branch_name,
+            ]
+
+        if options.get("delete", False):
+            args = ["git", "branch", "--delete", branch_name]
+        else:
+            args = (
+                ["git", "branch"] + BRANCH_SPEC.build(options) + [branch_name] + []
+                if start_point is None
+                else [start_point]
+            )
         self.run(args)
