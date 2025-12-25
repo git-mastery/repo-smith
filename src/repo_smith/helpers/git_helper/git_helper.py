@@ -10,6 +10,7 @@ from repo_smith.helpers.git_helper.remote_options import (
     REMOTE_ADD_SPEC,
     RemoteAddOptions,
 )
+from repo_smith.helpers.git_helper.restore_options import RESTORE_SPEC, RestoreOptions
 from repo_smith.helpers.git_helper.tag_options import TAG_SPEC, TagOptions
 from repo_smith.helpers.helper import Helper
 
@@ -122,4 +123,37 @@ class GitHelper(Helper):
             paths = [paths] if isinstance(paths, str) else paths
             args.extend(paths)
 
+        self.run(args)
+
+    def restore(
+        self,
+        pathspec: Optional[str] = None,
+        **options: Unpack[RestoreOptions],
+    ) -> None:
+        """Calls the underlying git-restore command with the given support options.
+
+        More information about the git-restore command can be found `here <https://git-scm.com/docs/git-restore>`__.
+        """
+        if (
+            options.get("ours", False)
+            or options.get("theirs", False)
+            or options.get("merge", False)
+            or options.get("conflict") is not None
+        ) and options.get("source") is not None:
+            raise ValueError(
+                "Cannot use --ours, --theirs, --merge, or --conflict with --source."
+            )
+
+        if (
+            options.get("ours", False)
+            or options.get("theirs", False)
+            or options.get("merge", False)
+            or options.get("conflict") is not None
+        ) and options.get("ignore_unmerged") is not None:
+            raise ValueError(
+                "Cannot use --ours, --theirs, --merge, or --conflict with --ignore-unmerged."
+            )
+
+        trailing = [] if pathspec is None else [pathspec]
+        args = ["git", "restore"] + RESTORE_SPEC.build(options) + trailing
         self.run(args)

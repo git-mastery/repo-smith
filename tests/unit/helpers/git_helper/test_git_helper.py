@@ -1,6 +1,7 @@
 from subprocess import CompletedProcess
 from unittest.mock import patch
 
+import pytest
 from repo_smith.command_result import CommandResult
 from repo_smith.helpers.git_helper.git_helper import GitHelper
 from repo_smith.helpers.helper import Helper
@@ -156,3 +157,37 @@ def test_checkout_with_files():
         mock_helper.assert_called_with(
             ["git", "checkout", "test", "--", "filea.txt", "fileb.txt"]
         )
+
+
+def test_restore_staged_worktree():
+    with patch.object(
+        Helper,
+        "run",
+        return_value=CommandResult(
+            CompletedProcess(
+                ["git", "restore", "-S", "-W", "."],
+                returncode=0,
+            )
+        ),
+    ) as mock_helper:
+        gh = GitHelper(False)
+        gh.restore(pathspec=".", staged=True, worktree=True)
+        mock_helper.assert_called_with(["git", "restore", "-W", "-S", "."])
+
+
+def test_restore_ours():
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(
+                    ["git", "restore", "-S", "-W", "."],
+                    returncode=0,
+                )
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(False)
+        gh.restore(pathspec=".", ours=True, source=".", staged=True, worktree=True)
