@@ -1,4 +1,6 @@
 import os
+import shutil
+import stat
 import textwrap
 from io import TextIOWrapper
 from typing import Optional
@@ -32,7 +34,15 @@ class FilesHelper(Helper):
 
     def delete(self, filepath: FilePath) -> None:
         """Deletes a given file."""
-        os.remove(filepath)
+        if os.path.isdir(filepath):
+
+            def force_remove_readonly(func, path, _):
+                os.chmod(path, stat.S_IWRITE)
+                func(path)
+
+            shutil.rmtree(filepath, onerror=force_remove_readonly)
+        else:
+            os.remove(filepath)
 
     def __write_to_file__(self, file: TextIOWrapper, contents: str) -> None:
         file.write(textwrap.dedent(contents).lstrip())
