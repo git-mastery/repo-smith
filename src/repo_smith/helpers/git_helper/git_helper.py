@@ -219,8 +219,7 @@ class GitHelper(Helper):
                 old_branch,
                 branch_name,
             ]
-
-        if options.get("delete", False):
+        elif options.get("delete", False):
             args = ["git", "branch", "--delete", branch_name]
         else:
             args = (
