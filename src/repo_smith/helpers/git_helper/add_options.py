@@ -13,5 +13,5 @@ ADD_SPEC = (
     CommandSpec()
     .flag("force", "-f", default=False)
     .flag("update", "-u", default=False)
-    .flag("all", "-a", default=False)
+    .flag("all", "-A", default=False)
 )
