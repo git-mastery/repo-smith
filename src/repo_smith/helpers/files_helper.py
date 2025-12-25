@@ -5,13 +5,15 @@ import textwrap
 from io import TextIOWrapper
 from typing import Optional
 
+from git import Repo
+
 from repo_smith.helpers.helper import Helper
 from repo_smith.types import FilePath
 
 
 class FilesHelper(Helper):
-    def __init__(self, verbose: bool) -> None:
-        super().__init__(verbose)
+    def __init__(self, repo: Repo, verbose: bool) -> None:
+        super().__init__(repo, verbose)
 
     def create_or_update(
         self, filepath: FilePath, contents: Optional[str] = None

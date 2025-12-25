@@ -1,5 +1,7 @@
 from typing import List, Optional, Union, Unpack
 
+from git import Repo
+
 from repo_smith.helpers.git_helper.add_options import ADD_SPEC, AddOptions
 from repo_smith.helpers.git_helper.checkout_options import (
     CHECKOUT_SPEC,
@@ -16,8 +18,8 @@ from repo_smith.helpers.helper import Helper
 
 
 class GitHelper(Helper):
-    def __init__(self, verbose: bool) -> None:
-        super().__init__(verbose)
+    def __init__(self, repo: Repo, verbose: bool) -> None:
+        super().__init__(repo, verbose)
 
     def tag(
         self,

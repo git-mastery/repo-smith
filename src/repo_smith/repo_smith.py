@@ -6,14 +6,16 @@ from git.repo import Repo
 
 from repo_smith.helpers.files_helper import FilesHelper
 from repo_smith.helpers.git_helper.git_helper import GitHelper
+from repo_smith.helpers.gitmastery_helper import GitMasteryHelper
 
 
 class RepoSmith:
     def __init__(self, repo: Repo, verbose: bool) -> None:
         self.verbose = verbose
         self.repo = repo
-        self.files = FilesHelper(verbose)
-        self.git = GitHelper(verbose)
+        self.files = FilesHelper(repo, verbose)
+        self.git = GitHelper(repo, verbose)
+        self.git_mastery = GitMasteryHelper(repo, verbose)
 
 
 class CreateRepoOptions(TypedDict, total=False):
