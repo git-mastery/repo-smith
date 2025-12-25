@@ -127,7 +127,7 @@ class GitHelper(Helper):
 
     def restore(
         self,
-        pathspec: Optional[str] = None,
+        pathspec: Optional[Union[str, List[str]]] = None,
         **options: Unpack[RestoreOptions],
     ) -> None:
         """Calls the underlying git-restore command with the given support options.
@@ -154,6 +154,9 @@ class GitHelper(Helper):
                 "Cannot use --ours, --theirs, --merge, or --conflict with --ignore-unmerged."
             )
 
-        trailing = [] if pathspec is None else [pathspec]
-        args = ["git", "restore"] + RESTORE_SPEC.build(options) + trailing
+        if pathspec is None:
+            pathspec = []
+        elif isinstance(pathspec, str):
+            pathspec = [pathspec]
+        args = ["git", "restore"] + RESTORE_SPEC.build(options) + pathspec
         self.run(args)
