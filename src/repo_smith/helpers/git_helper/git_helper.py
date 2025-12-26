@@ -223,8 +223,9 @@ class GitHelper(Helper):
             args = ["git", "branch", "--delete", branch_name]
         else:
             args = (
-                ["git", "branch"] + BRANCH_SPEC.build(options) + [branch_name] + []
-                if start_point is None
-                else [start_point]
+                ["git", "branch"]
+                + BRANCH_SPEC.build(options)
+                + [branch_name]
+                + ([] if start_point is None else [start_point])
             )
         self.run(args)

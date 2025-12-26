@@ -1,6 +1,5 @@
-import abc
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, List, Mapping, Self, TypedDict
+from typing import Any, Callable, Dict, List, Mapping, Self
 
 
 @dataclass(frozen=True)
