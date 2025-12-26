@@ -14,7 +14,9 @@ from repo_smith.helpers.git_helper.remote_options import (
     REMOTE_ADD_SPEC,
     RemoteAddOptions,
 )
+from repo_smith.helpers.git_helper.reset_options import RESET_SPEC, ResetOptions
 from repo_smith.helpers.git_helper.restore_options import RESTORE_SPEC, RestoreOptions
+from repo_smith.helpers.git_helper.revert_options import REVERT_SPEC, RevertOptions
 from repo_smith.helpers.git_helper.tag_options import TAG_SPEC, TagOptions
 from repo_smith.helpers.helper import Helper
 
@@ -228,4 +230,46 @@ class GitHelper(Helper):
                 + [branch_name]
                 + ([] if start_point is None else [start_point])
             )
+        self.run(args)
+
+    def revert(
+        self,
+        commits: Union[str, List[str]],
+        **options: Unpack[RevertOptions],
+    ) -> None:
+        """Calls the underlying git-revert command with the given support options.
+
+        More information about the git-revert command can be found `here <https://git-scm.com/docs/git-revert>`__.
+        """
+        if isinstance(commits, str):
+            commits = [commits]
+        # Hardcode --no-edit since we never allow interaction
+        args = ["git", "revert", "--no-edit"] + REVERT_SPEC.build(options) + commits
+        self.run(args)
+
+    def reset(
+        self,
+        commits: Optional[Union[str, List[str]]] = None,
+        pathspec: Optional[Union[str, List[str]]] = None,
+        **options: Unpack[ResetOptions],
+    ) -> None:
+        """Calls the underlying git-reset command with the given support options.
+
+        More information about the git-reset command can be found `here <https://git-scm.com/docs/git-reset>`__.
+        """
+        if isinstance(commits, str):
+            commits = [commits]
+        elif commits is None:
+            commits = []
+
+        args = ["git", "reset"] + RESET_SPEC.build(options)
+
+        args.extend(commits)
+
+        if pathspec is not None:
+            args.append("--")
+            if isinstance(pathspec, str):
+                pathspec = [pathspec]
+            args.extend(pathspec)
+
         self.run(args)
