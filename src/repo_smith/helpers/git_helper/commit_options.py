@@ -8,6 +8,7 @@ class CommitOptions(TypedDict, total=False):
     reuse_message: str
     message: str
     allow_empty: bool
+    no_edit: bool
 
 
 COMMIT_SPEC = (
@@ -16,4 +17,5 @@ COMMIT_SPEC = (
     .opt("reuse_message", "--reuse-message")
     .opt("message", "-m")
     .flag("allow_empty", "--allow-empty", default=False)
+    .flag("no_edit", "--no-edit", default=False)
 )
