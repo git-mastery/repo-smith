@@ -24,7 +24,8 @@ class FilesHelper(Helper):
             os.makedirs(dirname, exist_ok=True)
 
         if contents is None:
-            open(filepath, "a").close()
+            with open(filepath, "a"):
+                pass
         else:
             with open(filepath, "w") as file:
                 self.__write_to_file__(file, contents)
