@@ -6,13 +6,12 @@ from io import TextIOWrapper
 from typing import Optional
 
 from git import Repo
-
 from repo_smith.helpers.helper import Helper
 from repo_smith.types import FilePath
 
 
 class FilesHelper(Helper):
-    def __init__(self, repo: Repo, verbose: bool) -> None:
+    def __init__(self, repo: Optional[Repo], verbose: bool) -> None:
         super().__init__(repo, verbose)
 
     def create_or_update(

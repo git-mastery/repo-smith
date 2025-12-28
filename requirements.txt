@@ -5,3 +5,4 @@ types-PyYAML
 build
 twine
 pytest-cov
+mypy

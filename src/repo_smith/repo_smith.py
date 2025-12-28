@@ -1,6 +1,6 @@
 import tempfile
 from contextlib import contextmanager
-from typing import Dict, Iterator, Self, Type, TypedDict, TypeVar, Unpack
+from typing import Dict, Iterator, Optional, Self, Type, TypedDict, TypeVar, Unpack
 
 from git.repo import Repo
 
@@ -12,12 +12,18 @@ T = TypeVar("T", bound="Helper")
 
 
 class RepoSmith:
-    def __init__(self, repo: Repo, verbose: bool) -> None:
+    def __init__(self, repo: Optional[Repo], verbose: bool) -> None:
         self.verbose = verbose
-        self.repo = repo
+        self.__repo = repo
         self.files = FilesHelper(repo, verbose)
         self.git = GitHelper(repo, verbose)
         self.__additional_helpers: Dict[Type[Helper], Helper] = {}
+
+    @property
+    def repo(self) -> Repo:
+        if self.__repo is None:
+            raise ValueError("Repo is None, cannot access")
+        return self.__repo
 
     def add_helper(self, cls: Type[T]) -> Self:
         self.__additional_helpers[cls] = cls(self.repo, self.verbose)
@@ -32,6 +38,7 @@ class RepoSmith:
 class CreateRepoOptions(TypedDict, total=False):
     clone_from: str
     existing_path: str
+    null_repo: bool
 
 
 @contextmanager
@@ -41,10 +48,13 @@ def create_repo_smith(
     """Creates a RepoSmith instance over a given repository."""
     clone_from = options.get("clone_from")
     existing_path = options.get("existing_path")
+    null_repo = options.get("null_repo", False)
 
     dir = tempfile.mkdtemp() if existing_path is None else existing_path
 
-    if clone_from:
+    if null_repo:
+        repo = None
+    elif clone_from:
         repo = Repo.clone_from(clone_from, dir)
     else:
         repo = Repo.init(dir, initial_branch="main")
