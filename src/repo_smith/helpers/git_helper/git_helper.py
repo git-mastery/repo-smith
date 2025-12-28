@@ -9,6 +9,7 @@ from repo_smith.helpers.git_helper.checkout_options import (
 )
 from repo_smith.helpers.git_helper.commit_options import COMMIT_SPEC, CommitOptions
 from repo_smith.helpers.git_helper.fetch_options import FETCH_SPEC, FetchOptions
+from repo_smith.helpers.git_helper.init_options import INIT_SPEC, InitOptions
 from repo_smith.helpers.git_helper.merge_options import MERGE_SPEC, MergeOptions
 from repo_smith.helpers.git_helper.remote_options import (
     REMOTE_ADD_SPEC,
@@ -272,4 +273,17 @@ class GitHelper(Helper):
                 pathspec = [pathspec]
             args.extend(pathspec)
 
+        self.run(args)
+
+    def init(
+        self,
+        directory: Optional[str] = None,
+        **options: Unpack[InitOptions],
+    ) -> None:
+        """Calls the underlying git-init command with the given support options.
+
+        More information about the git-init command can be found `here <https://git-scm.com/docs/git-init>`__.
+        """
+        trailing = [] if directory is None else [directory]
+        args = ["git", "init"] + INIT_SPEC.build(options) + trailing
         self.run(args)
