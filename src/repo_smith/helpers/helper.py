@@ -1,11 +1,11 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from git import Repo
 from repo_smith.command_result import CommandResult, run
 
 
 class Helper:
-    def __init__(self, repo: Repo, verbose: bool) -> None:
+    def __init__(self, repo: Optional[Repo], verbose: bool) -> None:
         self.repo = repo
         self.verbose = verbose
 

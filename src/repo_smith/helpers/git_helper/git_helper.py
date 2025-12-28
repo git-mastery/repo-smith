@@ -22,7 +22,7 @@ from repo_smith.helpers.helper import Helper
 
 
 class GitHelper(Helper):
-    def __init__(self, repo: Repo, verbose: bool) -> None:
+    def __init__(self, repo: Optional[Repo], verbose: bool) -> None:
         super().__init__(repo, verbose)
 
     def tag(
