@@ -46,5 +46,14 @@ class FilesHelper(Helper):
         else:
             os.remove(filepath)
 
+    def mkdir(self, dir: FilePath) -> None:
+        os.makedirs(dir, exist_ok=True)
+
+    def cd(self, dir: FilePath) -> None:
+        os.chdir(dir)
+
+    def chmod(self, filepath: FilePath, mode: int) -> None:
+        os.chmod(filepath, mode)
+
     def __write_to_file__(self, file: TextIOWrapper, contents: str) -> None:
         file.write(textwrap.dedent(contents).lstrip())
