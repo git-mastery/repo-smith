@@ -6,6 +6,7 @@ from git.repo import Repo
 
 from repo_smith.helpers.files_helper import FilesHelper
 from repo_smith.helpers.git_helper.git_helper import GitHelper
+from repo_smith.helpers.github_cli_helper.github_cli_helper import GithubCliHelper
 from repo_smith.helpers.helper import Helper
 
 T = TypeVar("T", bound="Helper")
@@ -17,6 +18,7 @@ class RepoSmith:
         self.__repo = repo
         self.files = FilesHelper(repo, verbose)
         self.git = GitHelper(repo, verbose)
+        self.gh = GithubCliHelper(repo, verbose)
         self.__additional_helpers: Dict[Type[Helper], Helper] = {}
 
     @property
