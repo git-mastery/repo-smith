@@ -27,3 +27,4 @@ jobs:
     with:
       library_path: src/repo_smith
       ref_name: ${{ needs.prepare.outputs.ref_name }}
+    secrets: inherit
