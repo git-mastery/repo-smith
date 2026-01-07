@@ -1,5 +1,7 @@
+import shutil
 import tempfile
 from contextlib import contextmanager
+from logging import shutdown
 from typing import Dict, Iterator, Optional, Self, Type, TypedDict, TypeVar, Unpack
 
 from git.repo import Repo
@@ -62,3 +64,9 @@ def create_repo_smith(
         repo = Repo.init(dir, initial_branch="main")
 
     yield RepoSmith(repo, verbose)
+
+    if existing_path is None:
+        # Temporary directory created, so delete it
+        if repo is not None:
+            repo.git.clear_cache()
+        shutil.rmtree(dir)
