@@ -19,6 +19,7 @@ from repo_smith.helpers.git_helper.reset_options import RESET_SPEC, ResetOptions
 from repo_smith.helpers.git_helper.restore_options import RESTORE_SPEC, RestoreOptions
 from repo_smith.helpers.git_helper.revert_options import REVERT_SPEC, RevertOptions
 from repo_smith.helpers.git_helper.tag_options import TAG_SPEC, TagOptions
+from repo_smith.helpers.git_helper.push_options import PUSH_SPEC, PushOptions
 from repo_smith.helpers.helper import Helper
 
 
@@ -286,4 +287,26 @@ class GitHelper(Helper):
         """
         trailing = [] if directory is None else [directory]
         args = ["git", "init"] + INIT_SPEC.build(options) + trailing
+        self.run(args)
+
+    def push(
+        self,
+        repository: Optional[str] = None,
+        refspec: Optional[Union[str, List[str]]] = None,
+        **options: Unpack[PushOptions],
+    ) -> None:
+        """Calls the underlying git-push command with the given support options.
+
+        More information about the git-push command can be found `here <https://git-scm.com/docs/git-push>`__.
+        """
+        args = ["git", "push"] + PUSH_SPEC.build(options)
+        
+        if repository is not None:
+            args.append(repository)
+        
+        if refspec is not None:
+            if isinstance(refspec, str):
+                refspec = [refspec]
+            args.extend(refspec)
+        
         self.run(args)
