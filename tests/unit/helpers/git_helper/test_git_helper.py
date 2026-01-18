@@ -199,3 +199,35 @@ def test_restore_ours():
     ):
         gh = GitHelper(repo, False)
         gh.restore(pathspec=".", ours=True, source=".", staged=True, worktree=True)
+
+
+def test_push_with_refspec():
+    repo = MagicMock()
+    with patch.object(
+        Helper,
+        "run",
+        return_value=CommandResult(
+            CompletedProcess(["git", "push", "origin", "main"], returncode=0)
+        ),
+    ) as mock_helper:
+        gh = GitHelper(repo, False)
+        gh.push(repository="origin", refspec="main")
+        mock_helper.assert_called_with(["git", "push", "origin", "main"])
+
+
+def test_push_with_multiple_options():
+    repo = MagicMock()
+    with patch.object(
+        Helper,
+        "run",
+        return_value=CommandResult(
+            CompletedProcess(
+                ["git", "push", "--force", "--tags", "origin", "main"], returncode=0
+            )
+        ),
+    ) as mock_helper:
+        gh = GitHelper(repo, False)
+        gh.push(repository="origin", refspec="main", force=True, tags=True)
+        mock_helper.assert_called_with(
+            ["git", "push", "--force", "--tags", "origin", "main"]
+        )
