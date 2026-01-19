@@ -1,3 +1,4 @@
+import os
 import shutil
 import tempfile
 from contextlib import contextmanager
@@ -43,6 +44,7 @@ class CreateRepoOptions(TypedDict, total=False):
     clone_from: str
     existing_path: str
     null_repo: bool
+    include_remote_repo: bool
 
 
 @contextmanager
@@ -53,8 +55,10 @@ def create_repo_smith(
     clone_from = options.get("clone_from")
     existing_path = options.get("existing_path")
     null_repo = options.get("null_repo", False)
+    include_remote_repo = options.get("include_remote_repo", False)
 
     dir = tempfile.mkdtemp() if existing_path is None else existing_path
+    local_remote_dir = None
 
     if null_repo:
         repo = None
@@ -62,6 +66,12 @@ def create_repo_smith(
         repo = Repo.clone_from(clone_from, dir)
     else:
         repo = Repo.init(dir, initial_branch="main")
+  
+    if include_remote_repo:
+        local_remote_dir = tempfile.mkdtemp()
+        remote_path = os.path.join(local_remote_dir, "remote.git")
+        Repo.init(remote_path, bare=True)
+        repo.create_remote("origin", remote_path)
 
     yield RepoSmith(repo, verbose)
 
@@ -70,3 +80,7 @@ def create_repo_smith(
         if repo is not None:
             repo.git.clear_cache()
         shutil.rmtree(dir)
+    
+    # Clean up bare repository if created
+    if local_remote_dir is not None:
+        shutil.rmtree(local_remote_dir, ignore_errors=True)
