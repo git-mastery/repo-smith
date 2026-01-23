@@ -3,7 +3,7 @@ import shutil
 import tempfile
 from contextlib import contextmanager
 from logging import shutdown
-from typing import Dict, Iterator, Optional, Self, Type, TypedDict, TypeVar, Unpack
+from typing import Dict, Iterator, Optional, Self, Tuple, Type, TypedDict, TypeVar, Unpack
 
 from git.repo import Repo
 
@@ -50,8 +50,12 @@ class CreateRepoOptions(TypedDict, total=False):
 @contextmanager
 def create_repo_smith(
     verbose: bool, **options: Unpack[CreateRepoOptions]
-) -> Iterator[RepoSmith]:
-    """Creates a RepoSmith instance over a given repository."""
+) -> Iterator[Tuple[RepoSmith, Optional[RepoSmith]]]:
+    """Creates a RepoSmith instance over a given repository.
+    
+    Returns a tuple of (local_repo_smith, remote_repo_smith).
+    remote_repo_smith is None unless include_remote_repo=True.
+    """
     clone_from = options.get("clone_from")
     existing_path = options.get("existing_path")
     null_repo = options.get("null_repo", False)
@@ -59,6 +63,7 @@ def create_repo_smith(
 
     dir = tempfile.mkdtemp() if existing_path is None else existing_path
     local_remote_dir = None
+    remote_repo = None
 
     if null_repo:
         repo = None
@@ -70,10 +75,12 @@ def create_repo_smith(
     if include_remote_repo:
         local_remote_dir = tempfile.mkdtemp()
         remote_path = os.path.join(local_remote_dir, "remote.git")
-        Repo.init(remote_path, bare=True)
-        repo.create_remote("origin", remote_path)
+        remote_repo = Repo.init(remote_path, bare=True)
 
-    yield RepoSmith(repo, verbose)
+    yield (
+        RepoSmith(repo, verbose),
+        RepoSmith(remote_repo, verbose) if remote_repo else None,
+    )
 
     if existing_path is None:
         # Temporary directory created, so delete it
