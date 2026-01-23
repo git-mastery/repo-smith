@@ -231,3 +231,77 @@ def test_push_with_multiple_options():
         mock_helper.assert_called_with(
             ["git", "push", "--force", "--tags", "origin", "main"]
         )
+
+
+def test_push_with_all_and_refspec_raises_error():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(["git", "push", "--all", "main"], returncode=0)
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(refspec="main", all=True)
+
+
+def test_push_with_set_upstream_without_repository_raises_error():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(
+                    ["git", "push", "--set-upstream", "main"], returncode=0
+                )
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(refspec="main", set_upstream=True)
+
+
+def test_push_with_set_upstream_without_refspec_raises_error():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(
+                    ["git", "push", "--set-upstream", "origin"], returncode=0
+                )
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(repository="origin", set_upstream=True)
+
+
+def test_push_with_set_upstream_without_repository_and_refspec_raises_error():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(
+                    [
+                        "git",
+                        "push",
+                    ],
+                    returncode=0,
+                )
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(set_upstream=True)

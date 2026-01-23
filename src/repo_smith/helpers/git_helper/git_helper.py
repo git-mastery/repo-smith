@@ -299,14 +299,22 @@ class GitHelper(Helper):
 
         More information about the git-push command can be found `here <https://git-scm.com/docs/git-push>`__.
         """
+        if options.get("all") and refspec is not None:
+            raise ValueError("Cannot specify refspec when using --all in git push")
+
+        if options.get("set_upstream") and (repository is None or refspec is None):
+            raise ValueError(
+                "When using 'set_upstream', both 'repository' and 'refspec' must be provided."
+            )
+
         args = ["git", "push"] + PUSH_SPEC.build(options)
-        
+
         if repository is not None:
             args.append(repository)
-        
+
         if refspec is not None:
             if isinstance(refspec, str):
                 refspec = [refspec]
             args.extend(refspec)
-        
+
         self.run(args)
