@@ -307,6 +307,9 @@ class GitHelper(Helper):
                 "When using 'set_upstream', both 'repository' and 'refspec' must be provided."
             )
 
+        if refspec is not None and repository is None:
+            raise ValueError("Cannot specify refspec without repository.")
+
         args = ["git", "push"] + PUSH_SPEC.build(options)
 
         if repository is not None:

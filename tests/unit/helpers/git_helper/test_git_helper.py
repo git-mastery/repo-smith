@@ -201,7 +201,7 @@ def test_restore_ours():
         gh.restore(pathspec=".", ours=True, source=".", staged=True, worktree=True)
 
 
-def test_push_with_refspec():
+def test_push_with_refspec_and_repository():
     repo = MagicMock()
     with patch.object(
         Helper,
@@ -233,7 +233,7 @@ def test_push_with_multiple_options():
         )
 
 
-def test_push_with_all_and_refspec_raises_error():
+def test_push_with_all_and_refspec():
     repo = MagicMock()
     with (
         patch.object(
@@ -249,7 +249,7 @@ def test_push_with_all_and_refspec_raises_error():
         gh.push(refspec="main", all=True)
 
 
-def test_push_with_set_upstream_without_repository_raises_error():
+def test_push_with_set_upstream_without_repository():
     repo = MagicMock()
     with (
         patch.object(
@@ -267,7 +267,7 @@ def test_push_with_set_upstream_without_repository_raises_error():
         gh.push(refspec="main", set_upstream=True)
 
 
-def test_push_with_set_upstream_without_refspec_raises_error():
+def test_push_with_set_upstream_without_refspec():
     repo = MagicMock()
     with (
         patch.object(
@@ -285,7 +285,7 @@ def test_push_with_set_upstream_without_refspec_raises_error():
         gh.push(repository="origin", set_upstream=True)
 
 
-def test_push_with_set_upstream_without_repository_and_refspec_raises_error():
+def test_push_with_set_upstream_without_repository_and_refspec():
     repo = MagicMock()
     with (
         patch.object(
@@ -305,3 +305,22 @@ def test_push_with_set_upstream_without_repository_and_refspec_raises_error():
     ):
         gh = GitHelper(repo, False)
         gh.push(set_upstream=True)
+
+
+def test_push_with_refspec_without_repository():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(
+                    ["git", "push", "main"],
+                    returncode=0,
+                )
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(refspec="main")
