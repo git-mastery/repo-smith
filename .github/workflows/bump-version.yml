@@ -1,7 +1,8 @@
 name: Bump version tag on merge
 
 on:
-  push:
+  pull_request_target:
+    types: [closed]
     branches: [main]
 
 jobs:
