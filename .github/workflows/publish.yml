@@ -1,11 +1,6 @@
 name: Build and release repo-smith to PyPi
 
 on:
-  workflow_run:
-    workflows:
-      - Bump version tag on merge
-    types:
-      - completed
   workflow_dispatch:
   push:
     tags:
@@ -20,6 +15,7 @@ permissions:
 jobs:
   prepare:
     uses: git-mastery/actions/.github/workflows/get-latest-tag.yml@main
+    secrets: inherit
 
   publish:
     needs: prepare
