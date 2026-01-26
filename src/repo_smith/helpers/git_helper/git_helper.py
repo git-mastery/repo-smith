@@ -19,6 +19,7 @@ from repo_smith.helpers.git_helper.reset_options import RESET_SPEC, ResetOptions
 from repo_smith.helpers.git_helper.restore_options import RESTORE_SPEC, RestoreOptions
 from repo_smith.helpers.git_helper.revert_options import REVERT_SPEC, RevertOptions
 from repo_smith.helpers.git_helper.tag_options import TAG_SPEC, TagOptions
+from repo_smith.helpers.git_helper.push_options import PUSH_SPEC, PushOptions
 from repo_smith.helpers.helper import Helper
 
 
@@ -286,4 +287,37 @@ class GitHelper(Helper):
         """
         trailing = [] if directory is None else [directory]
         args = ["git", "init"] + INIT_SPEC.build(options) + trailing
+        self.run(args)
+
+    def push(
+        self,
+        repository: Optional[str] = None,
+        refspec: Optional[Union[str, List[str]]] = None,
+        **options: Unpack[PushOptions],
+    ) -> None:
+        """Calls the underlying git-push command with the given support options.
+
+        More information about the git-push command can be found `here <https://git-scm.com/docs/git-push>`__.
+        """
+        if options.get("all") and refspec is not None:
+            raise ValueError("Cannot specify refspec when using --all in git push")
+
+        if options.get("set_upstream") and (repository is None or refspec is None):
+            raise ValueError(
+                "When using 'set_upstream', both 'repository' and 'refspec' must be provided."
+            )
+
+        if refspec is not None and repository is None:
+            raise ValueError("Cannot specify refspec without repository.")
+
+        args = ["git", "push"] + PUSH_SPEC.build(options)
+
+        if repository is not None:
+            args.append(repository)
+
+        if refspec is not None:
+            if isinstance(refspec, str):
+                refspec = [refspec]
+            args.extend(refspec)
+
         self.run(args)

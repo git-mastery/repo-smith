@@ -199,3 +199,128 @@ def test_restore_ours():
     ):
         gh = GitHelper(repo, False)
         gh.restore(pathspec=".", ours=True, source=".", staged=True, worktree=True)
+
+
+def test_push_with_refspec_and_repository():
+    repo = MagicMock()
+    with patch.object(
+        Helper,
+        "run",
+        return_value=CommandResult(
+            CompletedProcess(["git", "push", "origin", "main"], returncode=0)
+        ),
+    ) as mock_helper:
+        gh = GitHelper(repo, False)
+        gh.push(repository="origin", refspec="main")
+        mock_helper.assert_called_with(["git", "push", "origin", "main"])
+
+
+def test_push_with_multiple_options():
+    repo = MagicMock()
+    with patch.object(
+        Helper,
+        "run",
+        return_value=CommandResult(
+            CompletedProcess(
+                ["git", "push", "--force", "--tags", "origin", "main"], returncode=0
+            )
+        ),
+    ) as mock_helper:
+        gh = GitHelper(repo, False)
+        gh.push(repository="origin", refspec="main", force=True, tags=True)
+        mock_helper.assert_called_with(
+            ["git", "push", "--force", "--tags", "origin", "main"]
+        )
+
+
+def test_push_with_all_and_refspec():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(["git", "push", "--all", "main"], returncode=0)
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(refspec="main", all=True)
+
+
+def test_push_with_set_upstream_without_repository():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(
+                    ["git", "push", "--set-upstream", "main"], returncode=0
+                )
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(refspec="main", set_upstream=True)
+
+
+def test_push_with_set_upstream_without_refspec():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(
+                    ["git", "push", "--set-upstream", "origin"], returncode=0
+                )
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(repository="origin", set_upstream=True)
+
+
+def test_push_with_set_upstream_without_repository_and_refspec():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(
+                    [
+                        "git",
+                        "push",
+                    ],
+                    returncode=0,
+                )
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(set_upstream=True)
+
+
+def test_push_with_refspec_without_repository():
+    repo = MagicMock()
+    with (
+        patch.object(
+            Helper,
+            "run",
+            return_value=CommandResult(
+                CompletedProcess(
+                    ["git", "push", "main"],
+                    returncode=0,
+                )
+            ),
+        ),
+        pytest.raises(ValueError),
+    ):
+        gh = GitHelper(repo, False)
+        gh.push(refspec="main")
