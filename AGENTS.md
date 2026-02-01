@@ -34,6 +34,8 @@ Agents are designed to be **minimal, scriptable, and composable**, so they can b
 - **Imports**: Group in order: stdlib → third-party → local. Use absolute imports from `repo_smith`
 - **Dataclasses**: Prefer `@dataclass` for simple data containers
 
+Below is a list of agents you may be asked to act as. Check the relevant section for further context on how that particular agent would act.
+
 ## 1. CI / Test Runner Agent
 
 **Purpose**
