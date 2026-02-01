@@ -6,6 +6,34 @@ Agents are designed to be **minimal, scriptable, and composable**, so they can b
 
 ---
 
+## Dev environment
+
+- Python 3.13+
+- Install dependencies: `pip install -r requirements.txt`
+
+## Testing
+
+- Run tests: `python -m pytest -s -vv`
+- Tests are located in `tests/`
+
+## Project structure
+
+- `src/repo_smith/` - Main package
+  - `steps/` - Code specification of steps
+  - `spec.py` - Repo spec wrapper
+  - `types.py` - Type definitions
+  - `initialize_repo.py` - Repo initialization manager
+  - `repo_smith.py` - RepoSmith instance creator
+  - `helpers/` - Utility functions
+- `specification.md` - Documentation
+- `tests/` - Test suite
+
+## Code style
+
+- **Type hints**: Required on all function signatures. Use `Optional[T]` for nullable types, union syntax `A | B` for alternatives
+- **Imports**: Group in order: stdlib → third-party → local. Use absolute imports from `repo_smith`
+- **Dataclasses**: Prefer `@dataclass` for simple data containers
+
 ## 1. CI / Test Runner Agent
 
 **Purpose**
@@ -25,12 +53,12 @@ Run and report unit and integration tests.
 **Typical commands**
 
 * `pip install -r requirements.txt`
-* `pytest -q`
+* `python -m pytest -s -vv`
 
 **Key files**
 
 * Tests: [`tests/`](tests/)
-* Integration entry points: [`tests/integration/steps/test_revert_step.py`](tests/integration/steps/test_revert_step.py)
+* Integration entry points: [`tests/integration/steps/`](tests/integration/steps/)
 * Config: [`pyproject.toml`](pyproject.toml), [`requirements.txt`](requirements.txt)
 
 ---
@@ -209,7 +237,7 @@ Maintain documentation and assist with releases.
 
 **Common workflows**
 
-* Run tests: `pytest -q`
+* Run tests: `python -m pytest -s -vv`
 * Lint specs: validate YAML files in `tests/specs/` against [`specification.md`](specification.md)
 * Initialize repo in tests: call [`initialize_repo`](src/repo_smith/initialize_repo.py)
 
