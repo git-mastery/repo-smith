@@ -1,8 +1,0 @@
-GitPython
-pytest
-PyYAML
-types-PyYAML
-build
-twine
-pytest-cov
-mypy
