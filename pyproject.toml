@@ -25,7 +25,18 @@ Issues = "https://github.com/git-mastery/repo-smith/issues"
 
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib"]
-pythonpath = "src"
+pythonpath = ["src", "."]
 
 [tool.hatch.version]
 path = "src/repo_smith/version.py"
+
+[dependency-groups]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+dev = [
+    "mypy",
+    "build",
+    "twine",
+]
